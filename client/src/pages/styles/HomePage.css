@@ -1,0 +1,99 @@
+.home-page-main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* overflow-y: hidden; */
+}
+
+.home-page-top-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+.home-page-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+.home-page-profile-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-page-reserved-wrapper {
+  position: relative;
+}
+
+.home-page-divider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 12rem);
+  height: 3px;
+  background-color: #151515;
+  z-index: 0;
+}
+
+.home-page-reserved-gifts-container {
+  position: relative;
+  background-color: #fff4be;
+  padding: 0.5rem 1rem 0.5rem 2rem;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid #151515;
+  font-weight: 500;
+  z-index: 1;
+}
+
+.home-page-wishlists {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home-page-wishlists-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 4rem;
+  margin-bottom: 1rem;
+}
+
+.wishlists-content {
+  /* width: 100%; */
+  display: flex;
+  flex-wrap: row;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.wishlists-empty-placeholder{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 3rem 0rem;
+}
+
+.wishlists-cards {
+  display: flex;
+  flex-direction: row;
+  width: 66.4rem;
+  gap: 4rem;
+}
+
+.create-new-wishlist {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}

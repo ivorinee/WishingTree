@@ -1,0 +1,47 @@
+.authentication-page-main-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.authentication-container {
+  display: flex;
+  flex-direction: column;
+  /* gap: 3rem; */
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.authentication-heading {
+  width: 100%;
+}
+
+.authentication-form-container {
+  display: flex;
+  flex-direction: row;
+  width: 40rem;
+  gap: 2rem;
+}
+
+.authentication-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.authentication-art-border {
+  width: 36rem;
+  height: 36rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.authentication-art {
+  width: 30rem;
+}

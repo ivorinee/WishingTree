@@ -1,0 +1,38 @@
+.unwrap-gift-main-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5 rem;
+}
+
+.gift-plan-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.gift-plan-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.gift-plan-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 15rem;
+    width: 18rem;
+    border: 3px solid #151515;
+    border-radius: 30px;
+    background-color: #FFF4BE;
+    padding: 0.5rem 4rem 2.6rem 4rem;
+}
+
+.text-bold {
+    font-weight: 500;
+}
+
+.text-light {
+    font-weight: 300;
+}

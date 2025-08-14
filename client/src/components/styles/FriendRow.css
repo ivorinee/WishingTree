@@ -1,0 +1,50 @@
+.friend-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0rem;
+  width: 100%;
+}
+
+.friend-request-padding {
+  padding: 0.5rem 0rem 1rem 0rem;
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.friend-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 100%;
+  border: 2px solid #151515;
+  margin-right: 1rem;
+}
+
+.friend-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-item-name {
+  font-family: "Playfair";
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.friend-item-id {
+  font-weight: 300;
+}
+
+.friend-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}

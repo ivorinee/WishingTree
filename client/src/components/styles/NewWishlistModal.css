@@ -1,0 +1,62 @@
+.new-wishlist-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.disabled-pointer {
+  pointer-events: auto;
+  backdrop-filter: blur(2px);
+  background-color: #1515154D;
+}
+
+.new-wishlist-modal {
+  width: 25rem;
+  height: 20rem;
+  background-color: #c8e7fb;
+  border: 3px solid #151515;
+  border-radius: 30px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 4rem;
+  justify-content: space-between;
+}
+
+.new-wishlist-modal-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-wishlist-title {
+  font-family: "Playfair";
+  font-style: italic;
+  font-weight: 600;
+}
+
+.new-wishlist-modal-contents {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.new-wishlist-privacy-status-container {
+  width: 20rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,0 +1,11 @@
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Dependency directories (safety net)
+node_modules

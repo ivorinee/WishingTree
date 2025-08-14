@@ -1,0 +1,126 @@
+.wishlist-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.wishlist-item-container {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 4.4rem;
+  padding: 0.5rem 1.6rem;
+  border: 2px solid #151515;
+  border-radius: 30px;
+}
+
+.wishlist-item-editing {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.wishlist-item-content-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  height: 4.4rem;
+}
+
+.wishlist-item-owned {
+  padding-right: 1.5rem;
+}
+
+.wishlist-item-owned p {
+  font-weight: 600;
+}
+
+.wishlist-item-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wishlist-item-name-tag {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wishlist-item-name {
+  font-weight: 500;
+}
+
+.wishlist-item-priority {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0rem 0.6rem;
+  border: 2px solid #151515;
+  border-radius: 30px;
+}
+
+.wishlist-item-priority p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1rem;
+}
+
+.wishlist-item-description {
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.wishlist-item-actions {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.wishlist-item-details {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.wishlist-item-modified {
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+
+.wishlist-item-price {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.wishlist-item-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.wishlist-item-owned {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.wishlist-item-editing-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #ffe770;
+  border: 2px solid #151515;
+  border-radius: 30px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 0.8rem;
+  gap: 0.5rem;
+}

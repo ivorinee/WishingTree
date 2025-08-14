@@ -1,0 +1,148 @@
+.universal-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe169;
+  border: 2px solid #151515;
+  border-radius: 30px;
+  padding: 0.5rem 4rem;
+  font-weight: 500;
+  gap: 1rem;
+}
+
+.authentication-button {
+  width: 20rem;
+  height: 3rem;
+}
+
+.sort-button {
+  background-color: #ffffff;
+  width: 7rem;
+  height: 2rem;
+}
+
+.next-prev-button {
+  background-color: #ffffff;
+  padding: 0rem 0.8rem;
+  height: 8rem;
+}
+
+.create-new-wishlist-button {
+  height: 3rem;
+}
+
+.bin-button {
+  background-color: #1515154d;
+  padding: 1rem;
+  width: 2.8rem;
+  height: 2.8rem;
+}
+
+.submit-button {
+  width: 20rem;
+  height: 3rem;
+}
+
+.wishlist-button-navbar {
+  border: 0px;
+  padding: 0rem;
+  background-color: transparent;
+}
+
+.link-button {
+  background: #ffffff;
+  border: 2px solid #151515;
+  border-radius: 30px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-button img {
+  width: 1rem;
+}
+
+.mark-received-reserve-button {
+  padding: 0rem 2rem;
+  width: 15rem;
+}
+
+.white-background {
+  background-color: #ffffff;
+  /* cursor: default; */
+}
+
+.edit-item-button {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 0.9rem;
+  width: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.delete-item-button {
+  background-color: #1515154d;
+  border-radius: 20px;
+  padding: 0.9rem;
+  width: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.disabled {
+  background-color: #1515154d;
+  cursor: not-allowed;
+}
+
+disabled {
+  cursor: not-allowed;
+}
+
+.close-button {
+  padding: 1rem;
+  height: 3rem;
+  width: 3rem;
+}
+
+.create-wishlist-button {
+  background-color: #ffffff;
+  height: 3rem;
+}
+
+.view-friend-button {
+  padding: 0.5rem 5rem;
+}
+
+.remove-friend-button {
+  padding: 0.5rem 3rem;
+  background-color: #ffffff;
+}
+
+.accept-friend-button {
+  background-color: #ffd693;
+}
+
+.decline-friend-button {
+  background-color: #ffffff;
+}
+
+.searchUserButton {
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.share-list-button {
+  padding: 0rem 4rem;
+  height: 2.5rem;
+  background-color: #ffd693;
+}
+
+.orange-background {
+  background-color: #ffd693;
+}
+
+.opacity-disabled {
+  opacity: 30%;
+  cursor: not-allowed;
+}

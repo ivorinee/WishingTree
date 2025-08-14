@@ -1,0 +1,68 @@
+import Button from "../components/Button";
+import { handleSendRequest } from "../api/userApi";
+import profilePic from "../assets/profile-1.svg";
+import "./styles/SearchUserCard.css";
+
+function SearchUserCard({
+  name,
+  id,
+  wishlists,
+  friends,
+  currentUser,
+  userFriendRequests = [],
+  currentUserFriends = [],
+  onButtonClick,
+}) {
+  const isOwner = currentUser.id === id;
+  const isFriend = currentUserFriends.includes(id);
+  const hasSentRequest = userFriendRequests.includes(currentUser.id);
+
+  let buttonText = "Befriend";
+  let buttonDisabled = false;
+  let buttonClass = "";
+  if (isOwner) {
+    buttonText = "It's You";
+    buttonDisabled = true;
+    buttonClass = "disabled";
+  } else if (isFriend) {
+    buttonText = "Already Friend";
+    buttonDisabled = true;
+    buttonClass = "disabled";
+  } else if (hasSentRequest) {
+    buttonText = "Request Sent";
+    buttonDisabled = true;
+    buttonClass = "disabled";
+  }
+
+  return (
+    <div className="search-user-card">
+      <div className="search-user-profile">
+        <img src={profilePic} className="home-page-profile-pic" />
+        <div className="search-user-profile-details">
+          <p className="search-user-profile-name">{name}</p>
+          <p className="search-user-profile-id">ID: {id}</p>
+        </div>
+      </div>
+      <div className="search-user-details">
+        <div className="search-user-details-row">
+          <p># of Wishlists</p>
+          <p>{wishlists}</p>
+        </div>
+        <div className="search-user-details-row">
+          <p># of Friends</p>
+          <p>{friends}</p>
+        </div>
+      </div>
+      <div className="search-user-action">
+        <Button
+          name={buttonText}
+          disabled={buttonDisabled}
+          style={`${buttonClass} searchUserButton`}
+          onClick={() => handleSendRequest(id, onButtonClick)}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default SearchUserCard;
