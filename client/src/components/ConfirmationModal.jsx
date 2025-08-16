@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import { deleteItemInWishlist } from "../api/itemApi";
+import { removeFriend } from "../api/userApi";
 import confirmationBinIcon from "../assets/confirmation-bin-icon.svg";
 import "./styles/ConfirmationModal.css";
 
@@ -25,10 +26,10 @@ function ConfirmationModal({ type, id, onClose, refresh }) {
           await deleteItemInWishlist(id);
           break;
         case "wishlist":
-        //   await deleteWishlist(id);
+          //   await deleteWishlist(id);
           break;
         case "friend":
-        //   await removeFriend(id);
+            await removeFriend(id);
           break;
         default:
           console.warn("Unknown delete type:", type);

@@ -54,6 +54,7 @@ function FriendListPage() {
                 <FriendRow
                   friend={{ name: friend.name, id: friend.id }}
                   type="friend"
+                  refreshList={loadData}
                 />
                 {index < friends.length - 1 && (
                   <div className="friend-item-gap" />

@@ -84,3 +84,17 @@ export async function rejectRequest(id) {
     console.error("Error fetching user:", error.response?.data || error);
   }
 }
+
+export async function removeFriend(id) {
+  try {
+    await axios.post(
+      `${API_BASE_URL}/users/removefriend`,
+      { friendId: id },
+      {
+        withCredentials: true,
+      }
+    );
+  } catch (error) {
+    console.error("Error unfriending user:", error.response?.data || error);
+  }
+}
