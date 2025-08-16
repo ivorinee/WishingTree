@@ -124,8 +124,9 @@ export async function calculatePercentageComplete(req, res) {
   try {
     const totalItems = await getItems(wishlistId);
     const unreceivedItems = await getUnreceivedItems(wishlistId);
-    const percentage =
-      ((totalItems.length - unreceivedItems.length) / totalItems.length) * 100;
+    const percentage = Math.round(
+      ((totalItems.length - unreceivedItems.length) / totalItems.length) * 100
+    );
     if (totalItems.length === 0) {
       return res
         .status(200)

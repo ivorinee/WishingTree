@@ -30,6 +30,25 @@ export async function fetchWishlist(id) {
   }
 }
 
+export async function createWishlist(name, privacyStatus) {
+  try {
+    await axios.post(
+      `${API_BASE_URL}/wishlists/create`,
+      {
+        name,
+        privacyStatus,
+      },
+      { withCredentials: true }
+    );
+  } catch (error) {
+    console.error(
+      "Wishlist created failed:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+}
+
 export async function setPrivacyStatus(isPrivate, wishlist) {
   try {
     const newStatus = !isPrivate;
@@ -110,9 +129,6 @@ export async function fetchPercentageComplete(wishlistId) {
     );
     return wishlist.data.percentage;
   } catch (error) {
-    console.error(
-      "Error fetching percentage:",
-      error.response?.data || error
-    );
+    console.error("Error fetching percentage:", error.response?.data || error);
   }
 }

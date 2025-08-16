@@ -1,14 +1,13 @@
 import { useState } from "react";
-import axios from "axios";
 import Button from "./Button";
 import LabeledForm from "./LabeledForm";
+import { createWishlist } from "../api/wishlistApi";
 import lockIcon from "../assets/lock-icon.svg";
 import unlockIcon from "../assets/unlock-icon.svg";
 import closeButton from "../assets/close-button.svg";
 import "./styles/NewWishlistModal.css";
 
 function NewWishlistModal({ onClick, refreshWishlists }) {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [formValues, setFormValues] = useState({
     wishlistName: "",
     privacyStatus: true,
@@ -29,27 +28,30 @@ function NewWishlistModal({ onClick, refreshWishlists }) {
     }));
   }
 
+  function validateInputs() {
+    if (!formValues.wishlistName) {
+      return "Please enter the name for your new wishlist.";
+    }
+
+    if (formValues.wishlistName.length > 100) {
+      return "Wishlist name cannot exceed 100 characters.";
+    }
+
+    return null;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      const response = axios.post(
-        `${API_BASE_URL}/wishlists/create`,
-        {
-          name: formValues.wishlistName,
-          privacyStatus: formValues.privacyStatus,
-        },
-        { withCredentials: true }
-      );
-      setError("");
-      console.log("Wishlist created successful:", response.data);
-      await refreshWishlists();
-      onClick(false);
-    } catch (error) {
-      console.error(
-        "Wishlist created failed:",
-        error.response?.data || error.message
-      );
+    const validationError = validateInputs();
+    if (validationError) {
+      setError(validationError);
+      return;
     }
+
+    setError("");
+    await createWishlist(formValues.wishlistName, formValues.privacyStatus);
+    await refreshWishlists();
+    onClick(false);
   }
 
   return (
@@ -92,6 +94,9 @@ function NewWishlistModal({ onClick, refreshWishlists }) {
               </div>
             </button>
           </div>
+        </div>
+        <div className="error-placeholder-container">
+          <p className="error-placeholder">{error}</p>
         </div>
         <Button
           name="CREATE"

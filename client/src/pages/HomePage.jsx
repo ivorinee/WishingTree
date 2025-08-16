@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import ScreenFrame from "../components/ScreenFrame";
 import WishlistCard from "../components/WishlistCard";
@@ -17,6 +18,7 @@ import leftIcon from "../assets/left-icon.svg";
 import "./styles/HomePage.css";
 
 function HomePage() {
+    const navigate = useNavigate();
   const [name, setName] = useState("");
   const [newWishlistModal, setNewWishlistModal] = useState(false);
   const [reservedGifts, setReservedGifts] = useState(0);
@@ -54,7 +56,6 @@ function HomePage() {
 
     const pages = Math.ceil(wishlistData.length / itemsPerPage);
     setTotalPersonalPages(pages);
-    // setPage(pages - 1);
 
     const percentageData = await Promise.all(
       wishlistData.map((wishlist) =>
@@ -163,6 +164,7 @@ function HomePage() {
                   name="VIEW NOW"
                   style={reservedGifts === 0 && "disabled"}
                   disabled={reservedGifts === 0}
+                  onClick={() => navigate("/reserved-gifts")}
                 />
               </div>
             </div>
