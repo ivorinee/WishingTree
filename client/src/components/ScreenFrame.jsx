@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import axios from "axios";
 import loginIcon from "../assets/login-icon.svg";
 import signUpIcon from "../assets/sign-up-icon.svg";
 import unwrapGiftIcon from "../assets/unwrap-gift-icon.svg";
@@ -7,6 +8,7 @@ import searchIcon from "../assets/search-icon.svg";
 import "./styles/ScreenFrame.css";
 
 function ScreenFrame({ children }) {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const location = useLocation();
   const navigate = useNavigate();
   const path = location.pathname;
@@ -31,6 +33,20 @@ function ScreenFrame({ children }) {
       return;
     } else {
       navigate(newPath);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
+      console.log("Logout successful:", response.data);
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error.response?.data || error.message);
     }
   }
 
@@ -98,10 +114,7 @@ function ScreenFrame({ children }) {
                 >
                   Friends
                 </button>
-                <button
-                  className="logged-in-button"
-                  onClick={() => handleNavigation("/")}
-                >
+                <button className="logged-in-button" onClick={handleLogout}>
                   Logout
                 </button>
               </div>
