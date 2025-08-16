@@ -23,15 +23,35 @@ function SignUpPage() {
   ];
   const [error, setError] = useState("");
 
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+  const isValidPassword = (password) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,50}$/.test(
+      password
+    );
+
   function handleChange(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   }
 
   async function handleSignUp(e) {
     e.preventDefault();
-    if (formValues.password != formValues.confirmPassword) {
+
+    if (
+      formValues.name == "" ||
+      formValues.email == "" ||
+      formValues.password == "" ||
+      formValues.confirmPassword == ""
+    ) {
+      setError("Please complete all required fields.");
+    } else if (!isEmail(formValues.email)) {
+      setError("Please enter a valid email address.");
+    } else if (!isValidPassword(formValues.password)) {
+      setError(
+        "Password must be at least 6 characters and include an uppercase letter, a lowercase letter, and a number."
+      );
+    } else if (formValues.password != formValues.confirmPassword) {
       setError("Passwords do not match.");
-      return;
     } else {
       try {
         const response = await axios.post(
@@ -48,15 +68,8 @@ function SignUpPage() {
         navigate("/home");
       } catch (error) {
         console.error("Login failed:", error.response?.data || error.message);
+        setError(error.response.data.message);
       }
-    }
-  }
-
-  function handleSubmit() {
-    if (formValues.password != formValues.confirmPassword) {
-      return;
-    } else {
-      navigate("/home");
     }
   }
 
@@ -74,6 +87,7 @@ function SignUpPage() {
               values={formValues}
               onChange={handleChange}
             />
+            <p className="authentication-error-placeholder">{error}</p>
           </div>
           {/* <div className="gap" /> */}
           <div className="authentication-button-container">

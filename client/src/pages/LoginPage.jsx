@@ -40,6 +40,7 @@ function LoginPage() {
       navigate("/home");
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
+      setError(error.response.data.message);
     }
   }
 
@@ -57,8 +58,8 @@ function LoginPage() {
               values={formValues}
               onChange={handleChange}
             />
+            <p className="authentication-error-placeholder">{error}</p>
           </div>
-          <div className="gap" />
           <div className="authentication-button-container">
             <Button
               style="authentication-button"

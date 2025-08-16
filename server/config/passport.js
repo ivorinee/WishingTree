@@ -7,23 +7,31 @@ import {
 } from "../models/userModel.js";
 
 passport.use(
-  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
-    try {
-      const user = await findUserByEmail(email);
-      if (!user) {
-        return done(null, false, { message: "Email does not exist." });
-      }
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      try {
+        const user = await findUserByEmail(email);
+        if (!user) {
+          return done(null, false, {
+            message:
+              "This email is not registered. Please sign up or try again.",
+          });
+        }
 
-      const isValid = await validatePassword(password, user.password);
-      if (!isValid) {
-        return done(null, false, { message: "Incorrect password." });
-      }
+        const isValid = await validatePassword(password, user.password);
+        if (!isValid) {
+          return done(null, false, {
+            message: "Invalid password. Please try again.",
+          });
+        }
 
-      return done(null, user);
-    } catch (err) {
-      return done(err);
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
     }
-  })
+  )
 );
 
 passport.serializeUser((user, done) => {
