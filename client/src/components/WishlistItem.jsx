@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "./Button";
+import ConfirmationModal from "./ConfirmationModal";
 import { setReceived, setReserve } from "../api/itemApi";
 import priceIcon from "../assets/price-icon.svg";
 import linkIcon from "../assets/link-icon.svg";
@@ -25,7 +26,9 @@ function WishlistItem({
   colourScheme,
   owner,
   currentUserId,
+  refreshPage,
 }) {
+  const [confirmationModal, setConfirmationModal] = useState(false);
   const [hasReceived, setHasReceived] = useState(received);
   const [reservedBy, setReservedBy] = useState(reserved);
   const priorityColors = {
@@ -58,116 +61,130 @@ function WishlistItem({
   }
 
   return (
-    <div className="wishlist-item">
-      <div
-        className={`wishlist-item-container ${
-          editing ? "wishlist-item-editing" : ""
-        }`}
-        style={{
-          backgroundColor: hasReceived
-            ? "#FFFFFF"
-            : colourScheme.backgroundColor,
-        }}
-      >
-        <div className="wishlist-item-content-container">
-          {owner && hasReceived && (
-            <div className="wishlist-item-owned">
-              <p>OWNED</p>
+    <>
+      {confirmationModal && (
+        <ConfirmationModal
+          type="item"
+          id={id}
+          onClose={() => setConfirmationModal(false)}
+          refresh={refreshPage}
+        />
+      )}
+      <div className="wishlist-item">
+        <div
+          className={`wishlist-item-container ${
+            editing ? "wishlist-item-editing" : ""
+          }`}
+          style={{
+            backgroundColor: hasReceived
+              ? "#FFFFFF"
+              : colourScheme.backgroundColor,
+          }}
+        >
+          <div className="wishlist-item-content-container">
+            {owner && hasReceived && (
+              <div className="wishlist-item-owned">
+                <p>OWNED</p>
+              </div>
+            )}
+            <div className="wishlist-item-content">
+              <div className="wishlist-item-name-tag">
+                <p className="wishlist-item-name">{name}</p>
+                <div
+                  className="wishlist-item-priority "
+                  style={{ backgroundColor: effectivePriorityColor }}
+                >
+                  <p>{priority}</p>
+                </div>
+              </div>
+              <p className="wishlist-item-description">{description}</p>
             </div>
-          )}
-          <div className="wishlist-item-content">
-            <div className="wishlist-item-name-tag">
-              <p className="wishlist-item-name">{name}</p>
-              <div
-                className="wishlist-item-priority "
-                style={{ backgroundColor: effectivePriorityColor }}
-              >
-                <p>{priority}</p>
+          </div>
+          <div className="wishlist-item-actions">
+            <div className="wishlist-item-details">
+              <p className="wishlist-item-modified">
+                Last Modified: {lastModified}
+              </p>
+              <div className="wishlist-item-price">
+                <img src={priceIcon} alt="Price" />
+                <p>{price}</p>
               </div>
             </div>
-            <p className="wishlist-item-description">{description}</p>
-          </div>
-        </div>
-        <div className="wishlist-item-actions">
-          <div className="wishlist-item-details">
-            <p className="wishlist-item-modified">
-              Last Modified: {lastModified}
-            </p>
-            <div className="wishlist-item-price">
-              <img src={priceIcon} alt="Price" />
-              <p>{price}</p>
-            </div>
-          </div>
-          <div className="wishlist-item-buttons">
-            <Button image={linkIcon} style="link-button" />
-            {owner &&
-              (hasReceived ? (
-                <Button
-                  name="Undo Received"
-                  image={undoIcon}
-                  style="mark-received-reserve-button white-background"
-                  onClick={markAsUnreceived}
-                />
-              ) : (
-                <Button
-                  name="Mark as Received"
-                  image={receivedIcon}
-                  style="mark-received-reserve-button"
-                  onClick={markAsReceived}
-                />
-              ))}
-            {!owner && (
-              <>
-                {hasReceived ? (
+            <div className="wishlist-item-buttons">
+              <Button image={linkIcon} style="link-button" />
+              {owner &&
+                (hasReceived ? (
                   <Button
-                    name="Already Owned"
-                    image={receivedIcon}
-                    style="mark-received-reserve-button disabled"
-                    disabled
+                    name="Undo Received"
+                    image={undoIcon}
+                    style="mark-received-reserve-button white-background"
+                    onClick={markAsUnreceived}
                   />
-                ) : reservedBy !== null ? (
-                  reservedBy === currentUserId ? (
-                    <Button
-                      name="Unreserve Gift"
-                      image={cancelIcon}
-                      style="mark-received-reserve-button  white-background"
-                      onClick={unreserveItem}
-                    />
-                  ) : (
-                    <Button
-                      name={`Reserved by: ${reservedBy}`}
-                      style="mark-received-reserve-button orange-background disabled"
-                      disabled
-                    />
-                  )
                 ) : (
                   <Button
-                    name="Reserve Gift"
-                    image={editIcon}
-                    style="mark-received-reserve-button orange-background"
-                    onClick={reserveItem}
+                    name="Mark as Received"
+                    image={receivedIcon}
+                    style="mark-received-reserve-button"
+                    onClick={markAsReceived}
                   />
-                )}
-              </>
-            )}
+                ))}
+              {!owner && (
+                <>
+                  {hasReceived ? (
+                    <Button
+                      name="Already Owned"
+                      image={receivedIcon}
+                      style="mark-received-reserve-button disabled"
+                      disabled
+                    />
+                  ) : reservedBy !== null ? (
+                    reservedBy === currentUserId ? (
+                      <Button
+                        name="Unreserve Gift"
+                        image={cancelIcon}
+                        style="mark-received-reserve-button  white-background"
+                        onClick={unreserveItem}
+                      />
+                    ) : (
+                      <Button
+                        name={`Reserved by: ${reservedBy}`}
+                        style="mark-received-reserve-button orange-background disabled"
+                        disabled
+                      />
+                    )
+                  ) : (
+                    <Button
+                      name="Reserve Gift"
+                      image={editIcon}
+                      style="mark-received-reserve-button orange-background"
+                      onClick={reserveItem}
+                    />
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      {editing && (
-        <div className="wishlist-item-editing-container">
-          {!hasReceived && (
+        {editing && (
+          <div className="wishlist-item-editing-container">
+            {!hasReceived && (
+              <Button
+                image={editIcon}
+                style="edit-item-button "
+                onClick={() => {
+                  setEditItem({ id, name, description, priority, price, link });
+                }}
+              />
+            )}
             <Button
-              image={editIcon}
-              style="edit-item-button "
-              onClick={() => {
-                setEditItem({ id, name, description, priority, price, link });
-              }}
+              image={binIcon}
+              style="delete-item-button"
+              onClick={() => setConfirmationModal(true)}
             />
-          )}
-          <Button image={binIcon} style="delete-item-button" />
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

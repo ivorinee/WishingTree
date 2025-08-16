@@ -28,6 +28,13 @@ export async function modifyItem(itemId, name, desc, link, price, priority) {
   return result.rows[0];
 }
 
+export async function removeItem(itemId) {
+  const result = await pool.query("DELETE FROM wishlist_items WHERE id = $1", [
+    itemId,
+  ]);
+  return result.rows[0];
+}
+
 export async function getItems(wishlistId) {
   const result = await pool.query(
     `SELECT * FROM wishlist_items 

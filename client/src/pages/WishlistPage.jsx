@@ -226,6 +226,7 @@ function WishlistPage() {
                     colourScheme={ownership}
                     owner={wishlist.owner === currentUser?.id}
                     currentUserId={currentUser?.id}
+                    refreshPage={loadData}
                   />
                 ))}
               </div>

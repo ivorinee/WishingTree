@@ -60,6 +60,20 @@ export async function editItemInWishlist(
   }
 }
 
+export async function deleteItemInWishlist(id) {
+  try {
+    await axios.post(
+      `${API_BASE_URL}/item/delete`,
+      {
+        itemId: id,
+      },
+      { credential: true }
+    );
+  } catch (error) {
+    console.error("Error deleting item:", error.response?.data || error);
+  }
+}
+
 export async function setReceived(state, id) {
   try {
     await axios.post(

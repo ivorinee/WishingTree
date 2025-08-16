@@ -1,6 +1,7 @@
 import {
   insertItem,
   modifyItem,
+  removeItem,
   getItems,
   setReceived,
   setReserved,
@@ -28,6 +29,17 @@ export async function editItem(req, res) {
   } catch (err) {
     console.error("Item error:", err);
     return res.status(500).json({ message: "Error editing item in wishlist" });
+  }
+}
+
+export async function deleteItem(req, res) {
+  const { itemId } = req.body;
+  try {
+    await removeItem(itemId);
+    return res.status(200).json({ message: "Item removed successfully" });
+  } catch (err) {
+    console.error("Item error:", err);
+    return res.status(500).json({ message: "Error removing item in wishlist" });
   }
 }
 

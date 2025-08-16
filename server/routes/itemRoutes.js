@@ -2,6 +2,7 @@ import express from "express";
 import {
   addItem,
   editItem,
+  deleteItem,
   getItemsInWishlist,
   setItemAsReceived,
   setItemAsReserved,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.post("/:id/add", addItem);
 router.post("/edit", editItem);
+router.post("/delete", deleteItem);
 router.get("/:id/retrieve", getItemsInWishlist);
 router.post("/received", setItemAsReceived);
 router.post("/unreceived", setItemAsReceived);

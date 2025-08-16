@@ -55,7 +55,7 @@ function NewWishlistModal({ onClick, refreshWishlists }) {
   }
 
   return (
-    <div className="new-wishlist-modal-container disabled-pointer">
+    <div className="modal-container disabled-pointer">
       <div className="new-wishlist-modal">
         <div className="new-wishlist-modal-header">
           <h3 className="new-wishlist-title">Create New Wishlist</h3>
