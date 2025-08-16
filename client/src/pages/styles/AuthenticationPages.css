@@ -28,7 +28,7 @@
   gap: 0.5rem;
 }
 
-.authentication-error-placeholder {
+.error-placeholder {
   height: 1rem;
   color: #E76F6F;
   line-height: 1rem;

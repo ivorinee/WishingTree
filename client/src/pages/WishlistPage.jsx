@@ -70,7 +70,6 @@ function WishlistPage() {
     const wishlistData = await fetchWishlist(id);
     const wishlistItems = await fetchWishlistItems(id);
     const userData = await fetchCurrentUser();
-    // console.log(wishlistData);
     setWishlist(wishlistData);
     setWishlistItems(wishlistItems);
     setCurrentUser(userData);

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import LabeledForm from "./LabeledForm";
 import Button from "./Button";
+import { addItemToWishlist, editItemInWishlist } from "../api/itemApi";
 import "./styles/AddEditItem.css";
 
 function AddEditItem({
@@ -11,7 +11,6 @@ function AddEditItem({
   editingItem = {},
   refreshWishlist,
 }) {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const {
     name = "",
     description = "",
@@ -27,57 +26,69 @@ function AddEditItem({
     price,
     link,
   });
+  const [error, setError] = useState("");
 
   function handleChange(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   }
 
-  async function addItemToWishlist() {
-    try {
-      console.log(formValues);
-      await axios.post(
-        `${API_BASE_URL}/item/${id}/add`,
-        {
-          name: formValues.name,
-          desc: formValues.description,
-          link: formValues.link,
-          price: parseFloat(formValues.price),
-          priority: formValues.priority,
-        },
-        { withCredentials: true }
-      );
-    } catch (error) {
-      console.error("Error creating item:", error.response?.data || error);
+  function validateInputs() {
+    const { name, description, priority, price, link } = formValues;
+
+    if (!name) {
+      return "Please enter the name of the item you want on your wishlist.";
     }
-  }
-
-  async function editItemInWishlist() {
-    try {
-      await axios.post(
-        `${API_BASE_URL}/item/edit`,
-        {
-          itemId: id,
-          name: formValues.name,
-          desc: formValues.description,
-          link: formValues.link,
-          price: parseFloat(formValues.price),
-          priority: formValues.priority,
-        },
-        { credential: true }
-      );
-    } catch (error) {
-      console.error("Error editing item:", error.response?.data || error);
+    if (name.length > 100) {
+      return "Item name cannot exceed 100 characters.";
     }
+    if (description.length > 200) {
+      return "Item description cannot exceed 200 characters.";
+    }
+    if (!priority) {
+      return "Select a priority to show how much you want this item.";
+    }
+    if (!price) {
+      return "Please enter an estimated price for the wishlist item.";
+    }
+    if (price && (isNaN(price) || parseFloat(price) < 0)) {
+      return "Price must be a valid number greater than or equal to 0.";
+    }
+    if (link && !/^https?:\/\/[^\s]+$/.test(link)) {
+      return "Please provide a valid product link.";
+    }
+
+    return null;
   }
 
-  async function handleAddItemSubmit() {
-    await addItemToWishlist();
-    setCurrentPage("wishlist");
-    await refreshWishlist();
-  }
+  async function handleSubmit() {
+    const validationError = validateInputs();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
 
-  async function handleEditItemSubmit() {
-    await editItemInWishlist();
+    setError("");
+
+    if (type === "add") {
+      await addItemToWishlist(
+        id,
+        formValues.name,
+        formValues.description,
+        formValues.link,
+        formValues.price,
+        formValues.priority
+      );
+    } else {
+      await editItemInWishlist(
+        id,
+        formValues.name,
+        formValues.description,
+        formValues.link,
+        formValues.price,
+        formValues.priority
+      );
+    }
+
     setCurrentPage("wishlist");
     await refreshWishlist();
   }
@@ -123,10 +134,13 @@ function AddEditItem({
             </div>
           </div>
         </div>
+        <div className="error-placeholder-container">
+          <p className="error-placeholder">{error}</p>
+        </div>
         <Button
           name={type === "add" ? "Add Item" : "Save Changes"}
           style="submit-button"
-          onClick={type === "add" ? handleAddItemSubmit : handleEditItemSubmit}
+          onClick={handleSubmit}
         />
       </div>
     </div>

@@ -8,7 +8,6 @@ import editIcon from "../assets/edit-icon.svg";
 import binIcon from "../assets/small-bin-icon.svg";
 import cancelIcon from "../assets/cancel-icon.svg";
 import undoIcon from "../assets/undo-icon.svg";
-import heartIcon from "../assets/heart-icon.svg";
 import "./styles/WishlistItem.css";
 
 function WishlistItem({

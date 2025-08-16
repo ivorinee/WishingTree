@@ -87,7 +87,7 @@ function SignUpPage() {
               values={formValues}
               onChange={handleChange}
             />
-            <p className="authentication-error-placeholder">{error}</p>
+            <p className="error-placeholder">{error}</p>
           </div>
           {/* <div className="gap" /> */}
           <div className="authentication-button-container">

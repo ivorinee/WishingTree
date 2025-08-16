@@ -16,6 +16,50 @@ export async function fetchWishlistItems(id) {
   }
 }
 
+export async function addItemToWishlist(id, name, desc, link, price, priority) {
+  try {
+    await axios.post(
+      `${API_BASE_URL}/item/${id}/add`,
+      {
+        name,
+        desc,
+        link,
+        price: parseFloat(price),
+        priority,
+      },
+      { withCredentials: true }
+    );
+  } catch (error) {
+    console.error("Error creating item:", error.response?.data || error);
+  }
+}
+
+export async function editItemInWishlist(
+  id,
+  name,
+  desc,
+  link,
+  price,
+  priority
+) {
+  try {
+    await axios.post(
+      `${API_BASE_URL}/item/edit`,
+      {
+        itemId: id,
+        name,
+        desc,
+        link,
+        price: parseFloat(price),
+        priority,
+      },
+      { credential: true }
+    );
+  } catch (error) {
+    console.error("Error editing item:", error.response?.data || error);
+  }
+}
+
 export async function setReceived(state, id) {
   try {
     await axios.post(
