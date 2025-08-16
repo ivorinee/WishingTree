@@ -42,7 +42,25 @@ export async function createWishlist(name, privacyStatus) {
     );
   } catch (error) {
     console.error(
-      "Wishlist created failed:",
+      "Wishlist creation failed:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+}
+
+export async function deleteWishlist(id) {
+  try {
+    await axios.post(
+      `${API_BASE_URL}/wishlists/delete`,
+      {
+        wishlistId: id,
+      },
+      { withCredentials: true }
+    );
+  } catch (error) {
+    console.error(
+      "Wishlist deletion failed:",
       error.response?.data || error.message
     );
     throw error;

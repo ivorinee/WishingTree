@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createWishlist,
+  deleteWishlist,
   getUserWishlists,
   getOwnWishlists,
   getWishlistDetails,
@@ -14,6 +15,7 @@ import {
 const router = express.Router();
 
 router.post("/create", createWishlist);
+router.post("/delete", deleteWishlist);
 router.get("/retrieve/my", getOwnWishlists);
 router.get("/retrieve/user", getUserWishlists);
 router.get("/:id", getWishlistDetails);

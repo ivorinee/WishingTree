@@ -15,6 +15,14 @@ export async function insertWishlist(nameId, wishlistName, privacyStatus) {
   return result.rows[0];
 }
 
+export async function removeWishlist(wishlistId) {
+  const result = await pool.query("DELETE FROM wishlists WHERE id = $1", [
+    wishlistId,
+  ]);
+
+  return result.rows[0];
+}
+
 export async function getWishlistByOwner(ownerId) {
   const result = await pool.query("SELECT * FROM wishlists WHERE owner = $1", [
     ownerId,

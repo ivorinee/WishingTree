@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import ScreenFrame from "../components/ScreenFrame";
 import AddEditItem from "../components/AddEditItem";
 import WishlistItem from "../components/WishlistItem";
+import ConfirmationModal from "../components/ConfirmationModal";
 import { fetchWishlistItems } from "../api/itemApi";
 import {
   fetchWishlist,
@@ -44,6 +45,7 @@ function WishlistPage() {
   const [editingItem, setEditingItem] = useState(null);
   const [isEditingWishlist, setIsEditingWishlist] = useState(false);
   const [savedWishlist, setSavedWishlist] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(false);
 
   const ownershipColour = {
     ownership: {
@@ -116,196 +118,211 @@ function WishlistPage() {
   }, [wishlist, currentUser]);
 
   return (
-    <ScreenFrame>
-      <div className="wishlist-outer-layer">
-        <div className="screen-border">
-          <div
-            className="wishlist-fixed-top-box"
-            style={{ backgroundColor: ownership.backgroundColor }}
-          >
-            <div className="wishlist-navbar-container">
-              <img className="wishlist-navbar-icon" src={wishlistIcon} />
-              <div
-                className="wishlist-tab"
-                style={{ backgroundColor: ownership.primaryColor }}
-              >
-                <p>{wishlist.name}</p>
-                <Button
-                  style="wishlist-button-navbar"
-                  image={closeButton}
-                  onClick={() => navigate(-1)}
-                />
-              </div>
-              <div className="wishlist-navbar-right">
-                <Button
-                  style="wishlist-button-navbar"
-                  image={minimizeButton}
-                  onClick={() => navigate(-1)}
-                />
-                <Button
-                  style="wishlist-button-navbar"
-                  image={maximizeButton}
-                  onClick={() => navigate(-1)}
-                />
-                <Button
-                  style="wishlist-button-navbar"
-                  image={bigCloseButton}
-                  onClick={() => navigate(-1)}
-                />
+    <>
+      {confirmationModal && (
+        <ConfirmationModal
+          type="wishlist"
+          id={id}
+          onClose={() => setConfirmationModal(false)}
+          refresh={() => navigate(-1)}
+        />
+      )}
+      <ScreenFrame>
+        <div className="wishlist-outer-layer">
+          <div className="screen-border">
+            <div
+              className="wishlist-fixed-top-box"
+              style={{ backgroundColor: ownership.backgroundColor }}
+            >
+              <div className="wishlist-navbar-container">
+                <img className="wishlist-navbar-icon" src={wishlistIcon} />
+                <div
+                  className="wishlist-tab"
+                  style={{ backgroundColor: ownership.primaryColor }}
+                >
+                  <p>{wishlist.name}</p>
+                  <Button
+                    style="wishlist-button-navbar"
+                    image={closeButton}
+                    onClick={() => navigate(-1)}
+                  />
+                </div>
+                <div className="wishlist-navbar-right">
+                  <Button
+                    style="wishlist-button-navbar"
+                    image={minimizeButton}
+                    onClick={() => navigate(-1)}
+                  />
+                  <Button
+                    style="wishlist-button-navbar"
+                    image={maximizeButton}
+                    onClick={() => navigate(-1)}
+                  />
+                  <Button
+                    style="wishlist-button-navbar"
+                    image={bigCloseButton}
+                    onClick={() => navigate(-1)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="wishlist-scrollable-content">
-            <div className="wishlist-title">
-              <div className="wishlist-owner">
-                <p className="wishlist-card-owner">
-                  {currentPage === Pages.WISHLIST ? name : wishlist.name}
-                </p>
-                <h3>
-                  {currentPage === Pages.WISHLIST && wishlist.name}
-                  {currentPage === Pages.ADD_ITEM && "Add Item"}
-                  {currentPage === Pages.EDIT_ITEM && "Edit Item"}
-                </h3>
-              </div>
-              {currentPage === Pages.WISHLIST &&
-                wishlist.owner === currentUser?.id && (
-                  <div className="privacy-button">
-                    <button
-                      className={`privacy-toggle ${isPrivate ? "private" : ""}`}
-                      onClick={handlePrivacyToggle}
-                    >
-                      <div
-                        className="privacy-thumb"
-                        style={{ backgroundColor: ownership?.primaryColor }}
+            <div className="wishlist-scrollable-content">
+              <div className="wishlist-title">
+                <div className="wishlist-owner">
+                  <p className="wishlist-card-owner">
+                    {currentPage === Pages.WISHLIST ? name : wishlist.name}
+                  </p>
+                  <h3>
+                    {currentPage === Pages.WISHLIST && wishlist.name}
+                    {currentPage === Pages.ADD_ITEM && "Add Item"}
+                    {currentPage === Pages.EDIT_ITEM && "Edit Item"}
+                  </h3>
+                </div>
+                {currentPage === Pages.WISHLIST &&
+                  wishlist.owner === currentUser?.id && (
+                    <div className="privacy-button">
+                      <button
+                        className={`privacy-toggle ${
+                          isPrivate ? "private" : ""
+                        }`}
+                        onClick={handlePrivacyToggle}
                       >
-                        <img
-                          src={isPrivate ? lockIcon : unlockIcon}
-                          alt={isPrivate ? "Locked" : "Unlocked"}
-                        />
-                      </div>
-                    </button>
-                    <p>{isPrivate ? "Private" : "Public"}</p>
-                  </div>
-                )}
-              {currentPage !== Pages.WISHLIST &&
-                wishlist.owner === currentUser.id && (
+                        <div
+                          className="privacy-thumb"
+                          style={{ backgroundColor: ownership?.primaryColor }}
+                        >
+                          <img
+                            src={isPrivate ? lockIcon : unlockIcon}
+                            alt={isPrivate ? "Locked" : "Unlocked"}
+                          />
+                        </div>
+                      </button>
+                      <p>{isPrivate ? "Private" : "Public"}</p>
+                    </div>
+                  )}
+                {currentPage !== Pages.WISHLIST &&
+                  wishlist.owner === currentUser.id && (
+                    <Button
+                      image={closeButton}
+                      style="close-button"
+                      onClick={handleCancel}
+                    />
+                  )}
+                {wishlist.owner !== currentUser?.id && (
                   <Button
-                    image={closeButton}
-                    style="close-button"
-                    onClick={handleCancel}
+                    name="Share List"
+                    image={linkIcon}
+                    style="share-list-button"
                   />
                 )}
-              {wishlist.owner !== currentUser?.id && (
-                <Button
-                  name="Share List"
-                  image={linkIcon}
-                  style="share-list-button"
+              </div>
+              {currentPage === Pages.WISHLIST && (
+                <div className="wishlist-items">
+                  {wishlistItems.map((item) => (
+                    <WishlistItem
+                      key={item.id}
+                      id={item.id}
+                      name={item.name}
+                      description={item.description}
+                      priority={item.priority}
+                      price={item.price}
+                      lastModified={item.last_modified.split("T")[0]}
+                      link={item.link}
+                      received={item.received}
+                      reserved={item.reserved_by}
+                      editing={isEditingWishlist}
+                      setEditItem={(item) => {
+                        setEditingItem(item);
+                        setIsEditingWishlist(false);
+                        setCurrentPage(Pages.EDIT_ITEM);
+                      }}
+                      colourScheme={ownership}
+                      owner={wishlist.owner === currentUser?.id}
+                      currentUserId={currentUser?.id}
+                      refreshPage={loadData}
+                    />
+                  ))}
+                </div>
+              )}
+              {currentPage === Pages.ADD_ITEM && (
+                <AddEditItem
+                  type="add"
+                  id={id}
+                  setCurrentPage={setCurrentPage}
+                  refreshWishlist={loadData}
+                />
+              )}
+              {currentPage === Pages.EDIT_ITEM && editingItem && (
+                <AddEditItem
+                  type="edit"
+                  id={editingItem.id}
+                  editingItem={editingItem}
+                  setCurrentPage={setCurrentPage}
+                  refreshWishlist={loadData}
                 />
               )}
             </div>
-            {currentPage === Pages.WISHLIST && (
-              <div className="wishlist-items">
-                {wishlistItems.map((item) => (
-                  <WishlistItem
-                    key={item.id}
-                    id={item.id}
-                    name={item.name}
-                    description={item.description}
-                    priority={item.priority}
-                    price={item.price}
-                    lastModified={item.last_modified.split("T")[0]}
-                    link={item.link}
-                    received={item.received}
-                    reserved={item.reserved_by}
-                    editing={isEditingWishlist}
-                    setEditItem={(item) => {
-                      setEditingItem(item);
-                      setIsEditingWishlist(false);
-                      setCurrentPage(Pages.EDIT_ITEM);
+            {currentPage === Pages.WISHLIST &&
+              wishlist.owner === currentUser?.id && (
+                <div
+                  className="wishlist-fixed-bottom-box"
+                  style={{ backgroundColor: ownership.backgroundColor }}
+                >
+                  <Button
+                    name="Add Item"
+                    image={addIcon}
+                    style={isEditingWishlist ? "disabled" : ""}
+                    onClick={() => {
+                      setCurrentPage(Pages.ADD_ITEM);
+                      setEditingItem(null);
                     }}
-                    colourScheme={ownership}
-                    owner={wishlist.owner === currentUser?.id}
-                    currentUserId={currentUser?.id}
-                    refreshPage={loadData}
                   />
-                ))}
-              </div>
-            )}
-            {currentPage === Pages.ADD_ITEM && (
-              <AddEditItem
-                type="add"
-                id={id}
-                setCurrentPage={setCurrentPage}
-                refreshWishlist={loadData}
-              />
-            )}
-            {currentPage === Pages.EDIT_ITEM && editingItem && (
-              <AddEditItem
-                type="edit"
-                id={editingItem.id}
-                editingItem={editingItem}
-                setCurrentPage={setCurrentPage}
-                refreshWishlist={loadData}
-              />
-            )}
-          </div>
-          {currentPage === Pages.WISHLIST &&
-            wishlist.owner === currentUser?.id && (
+                  {isEditingWishlist ? (
+                    <Button
+                      name="Complete Editing"
+                      onClick={() => setIsEditingWishlist(!isEditingWishlist)}
+                    />
+                  ) : (
+                    <Button
+                      name="Edit List"
+                      image={editIcon}
+                      onClick={() => setIsEditingWishlist(!isEditingWishlist)}
+                    />
+                  )}
+                  <Button
+                    name="Share List"
+                    image={linkIcon}
+                    style={isEditingWishlist ? "disabled" : ""}
+                  />
+                  <Button
+                    name="Delete List"
+                    image={binIcon}
+                    style={isEditingWishlist ? "disabled" : ""}
+                    onClick={() => setConfirmationModal(true)}
+                  />
+                </div>
+              )}
+            {wishlist.owner !== currentUser?.id && (
               <div
                 className="wishlist-fixed-bottom-box"
                 style={{ backgroundColor: ownership.backgroundColor }}
               >
                 <Button
-                  name="Add Item"
-                  image={addIcon}
-                  style={isEditingWishlist ? "disabled" : ""}
+                  name={savedWishlist ? "Unsave Wishlist" : "Save Wishlist"}
+                  image={saveIcon}
+                  style={
+                    savedWishlist ? "white-background" : "orange-background"
+                  }
                   onClick={() => {
-                    setCurrentPage(Pages.ADD_ITEM);
-                    setEditingItem(null);
+                    handleSaveWishlist(savedWishlist);
                   }}
-                />
-                {isEditingWishlist ? (
-                  <Button
-                    name="Complete Editing"
-                    onClick={() => setIsEditingWishlist(!isEditingWishlist)}
-                  />
-                ) : (
-                  <Button
-                    name="Edit List"
-                    image={editIcon}
-                    onClick={() => setIsEditingWishlist(!isEditingWishlist)}
-                  />
-                )}
-                <Button
-                  name="Share List"
-                  image={linkIcon}
-                  style={isEditingWishlist ? "disabled" : ""}
-                />
-                <Button
-                  name="Delete List"
-                  image={binIcon}
-                  style={isEditingWishlist ? "disabled" : ""}
                 />
               </div>
             )}
-          {wishlist.owner !== currentUser?.id && (
-            <div
-              className="wishlist-fixed-bottom-box"
-              style={{ backgroundColor: ownership.backgroundColor }}
-            >
-              <Button
-                name={savedWishlist ? "Unsave Wishlist" : "Save Wishlist"}
-                image={saveIcon}
-                style={savedWishlist ? "white-background" : "orange-background"}
-                onClick={() => {
-                  handleSaveWishlist(savedWishlist);
-                }}
-              />
-            </div>
-          )}
+          </div>
         </div>
-      </div>
-    </ScreenFrame>
+      </ScreenFrame>
+    </>
   );
 }
 

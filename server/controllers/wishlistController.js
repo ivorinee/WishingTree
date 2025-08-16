@@ -1,5 +1,6 @@
 import {
   insertWishlist,
+  removeWishlist,
   getWishlistByOwner,
   getWishlistById,
   updatePrivacyStatus,
@@ -21,6 +22,19 @@ export async function createWishlist(req, res) {
   } catch (err) {
     console.error("Wishlist error:", err);
     return res.status(500).json({ message: "Error creating wishlist" });
+  }
+}
+
+export async function deleteWishlist(req, res) {
+  const { wishlistId } = req.body;
+  try {
+    const wishlist = await removeWishlist(wishlistId);
+    return res
+      .status(200)
+      .json({ message: "Wishlist deleted successfully", wishlist });
+  } catch (err) {
+    console.error("Wishlist error:", err);
+    return res.status(500).json({ message: "Error deleting wishlist" });
   }
 }
 

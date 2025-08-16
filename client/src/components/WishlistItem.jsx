@@ -28,9 +28,9 @@ function WishlistItem({
   currentUserId,
   refreshPage,
 }) {
-  const [confirmationModal, setConfirmationModal] = useState(false);
   const [hasReceived, setHasReceived] = useState(received);
   const [reservedBy, setReservedBy] = useState(reserved);
+  const [confirmationModal, setConfirmationModal] = useState(false);
   const priorityColors = {
     HIGH: "#E76F6F",
     MEDIUM: "#FFBC40",
