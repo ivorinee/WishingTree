@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import WishlistPage from "./pages/WishlistPage";
 import FriendListPage from "./pages/FriendListPage";
 import SearchPage from "./pages/SearchPage";
+import ReservedGiftPage from "./pages/ReservedGiftPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/wishlist/:id" element={<WishlistPage />} />
         <Route path="/friends" element={<FriendListPage />} />
         <Route path="/search/:query" element={<SearchPage />} />
+        <Route path="/reserved-gifts" element={<ReservedGiftPage />} />
       </Routes>
     </>
   );

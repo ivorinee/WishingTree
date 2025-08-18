@@ -93,7 +93,6 @@ export async function setReceived(state, id) {
 
 export async function setReserve(state, id) {
   try {
-    console.log(state, id);
     await axios.post(
       `${API_BASE_URL}/item/${state}`,
       { itemId: id },

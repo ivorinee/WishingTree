@@ -1,0 +1,74 @@
+.reserved-gift-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #151515;
+  border-radius: 30px;
+}
+
+.reserved-gift-top-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  border-bottom: 2px solid #151515;
+  box-sizing: border-box;
+  background-color: #ffe770;
+  border-radius: 30px 30px 0 0;
+}
+
+.reserved-gift-recipient {
+  font-family: "Playfair";
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.reserved-gift-bottom-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  box-sizing: border-box;
+  background-color: #fff4be;
+  border-radius: 0 0 30px 30px;
+}
+
+.reserved-gift-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.reserved-gift-name-price {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.reserved-gift-name {
+  font-weight: 500;
+}
+
+.reserved-gift-price {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.reserved-gift-price img {
+  width: 1rem;
+}
+
+.reserved-gift-description {
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+
+.reserved-gift-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}

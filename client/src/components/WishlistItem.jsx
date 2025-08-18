@@ -111,7 +111,7 @@ function WishlistItem({
               </div>
             </div>
             <div className="wishlist-item-buttons">
-              <Button image={linkIcon} style="link-button" />
+              {link && <Button image={linkIcon} style="link-button" />}
               {owner &&
                 (hasReceived ? (
                   <Button
