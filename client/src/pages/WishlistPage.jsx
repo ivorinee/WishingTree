@@ -14,6 +14,7 @@ import {
 } from "../api/wishlistApi";
 import { fetchCurrentUser, fetchUserDetails } from "../api/userApi";
 import wishlistIcon from "../assets/wishlist-icon.svg";
+import savedWishlistIcon from "../assets/saved-wishlist-icon.svg";
 import closeButton from "../assets/close-button.svg";
 import minimizeButton from "../assets/minimize-button.svg";
 import maximizeButton from "../assets/maximize-button.svg";
@@ -135,7 +136,10 @@ function WishlistPage() {
               style={{ backgroundColor: ownership.backgroundColor }}
             >
               <div className="wishlist-navbar-container">
-                <img className="wishlist-navbar-icon" src={wishlistIcon} />
+                <img
+                  className="wishlist-navbar-icon"
+                  src={savedWishlist ? savedWishlistIcon : wishlistIcon}
+                />
                 <div
                   className="wishlist-tab"
                   style={{ backgroundColor: ownership.primaryColor }}

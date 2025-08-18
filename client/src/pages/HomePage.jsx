@@ -18,7 +18,7 @@ import leftIcon from "../assets/left-icon.svg";
 import "./styles/HomePage.css";
 
 function HomePage() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [newWishlistModal, setNewWishlistModal] = useState(false);
   const [reservedGifts, setReservedGifts] = useState(0);
@@ -264,6 +264,7 @@ function HomePage() {
                       link={wishlist.share_link}
                       color={index % 2 === 0 ? "green" : "blue"}
                       side={index % 2 === 0 ? "left" : "right"}
+                      func={loadSavedWishlists}
                     />
                   ))}
                 </div>

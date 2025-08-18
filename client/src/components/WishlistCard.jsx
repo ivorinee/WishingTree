@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Button from "./Button";
+import { unsaveWishlist } from "../api/wishlistApi";
 import paperclip from "../assets/paperclip.svg";
 import binder from "../assets/binder.svg";
 import linkIcon from "../assets/link-icon.svg";
@@ -37,10 +38,16 @@ function WishlistCard({
   link,
   color,
   side,
+  func,
 }) {
   const navigate = useNavigate();
   const [isPrivate, setIsPrivate] = useState(privacy);
   const scheme = COLOR_SCHEMES[color] || COLOR_SCHEMES.pink;
+
+  async function removeSavedWishlist() {
+    await unsaveWishlist(id);
+    func();
+  }
 
   return (
     <div className="wishlist-card-container">
@@ -108,7 +115,13 @@ function WishlistCard({
                   </div>
                 </button>
               )}
-              {owner && <Button image={binIcon} style="bin-button" />}
+              {owner && (
+                <Button
+                  image={binIcon}
+                  style="bin-button"
+                  onClick={removeSavedWishlist}
+                />
+              )}
               <button
                 className="view-button"
                 style={{ backgroundColor: scheme.mainColor }}
