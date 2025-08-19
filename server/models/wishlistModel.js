@@ -80,3 +80,13 @@ export async function getSavedWishlistsByUser(id) {
   );
   return result.rows;
 }
+
+export async function updateWishlistName(name, wishlistId) {
+  const result = await pool.query(
+    `UPDATE wishlists 
+    SET name = $1
+    WHERE id = $2`,
+    [name, wishlistId]
+  );
+  return result.rows;
+}

@@ -7,6 +7,7 @@ import {
   insertToSavedWishlist,
   removeFromSavedWishlist,
   getSavedWishlistsByUser,
+  updateWishlistName,
 } from "../models/wishlistModel.js";
 
 import { getItems, getUnreceivedItems } from "../models/itemModel.js";
@@ -129,7 +130,7 @@ export async function getSavedWishlists(req, res) {
     console.error("Wishlist error:", err);
     return res
       .status(500)
-      .json({ message: "Error retrieving saved wishlsits" });
+      .json({ message: "Error retrieving saved wishlists" });
   }
 }
 
@@ -155,5 +156,19 @@ export async function calculatePercentageComplete(req, res) {
     return res
       .status(500)
       .json({ message: "Error calculating percentage items" });
+  }
+}
+
+export async function renameWishlist(req, res) {
+  const { id } = req.params;
+  const { name } = req.body;
+  try {
+    const wishlist = await updateWishlistName(name, id);
+    return res.status(200).json({ message: "Wishlist rename:", wishlist });
+  } catch (err) {
+    console.error("Wishlist error:", err);
+    return res
+      .status(500)
+      .json({ message: "Error renaming wishlist" });
   }
 }

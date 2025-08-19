@@ -11,6 +11,7 @@ import {
   saveWishlist,
   setPrivacyStatus,
   unsaveWishlist,
+  renameWishlist,
 } from "../api/wishlistApi";
 import { fetchCurrentUser, fetchUserDetails } from "../api/userApi";
 import wishlistIcon from "../assets/wishlist-icon.svg";
@@ -78,9 +79,12 @@ function WishlistPage() {
     setCurrentUser(userData);
   }
 
+  async function handleRenameWishlist(name) {
+    await renameWishlist(id, name);
+  }
+
   async function getWishlistOwner() {
     const userData = await fetchUserDetails(wishlist.owner);
-
     setName(userData.name);
   }
 
@@ -171,16 +175,27 @@ function WishlistPage() {
               </div>
             </div>
             <div className="wishlist-scrollable-content">
-              <div className="wishlist-title">
-                <div className="wishlist-owner">
-                  <p className="wishlist-card-owner">
-                    {currentPage === Pages.WISHLIST ? name : wishlist.name}
-                  </p>
-                  <h3>
-                    {currentPage === Pages.WISHLIST && wishlist.name}
-                    {currentPage === Pages.ADD_ITEM && "Add Item"}
-                    {currentPage === Pages.EDIT_ITEM && "Edit Item"}
-                  </h3>
+              <div className="wishlist-heading">
+                <div className="wishlist-title">
+                  <p>{currentPage === Pages.WISHLIST ? name : wishlist.name}</p>
+                  {currentPage === Pages.WISHLIST &&
+                    (isEditingWishlist ? (
+                      <input
+                        name="wishlist-name"
+                        className="wishlist-rename-input"
+                        type="text"
+                        size={wishlist.name.length || 1}
+                        value={wishlist.name}
+                        onChange={(e) =>
+                          setWishlist({ ...wishlist, name: e.target.value })
+                        }
+                        onBlur={() => handleRenameWishlist(wishlist.name)}
+                      />
+                    ) : (
+                      <h3>{wishlist.name}</h3>
+                    ))}
+                  {currentPage === Pages.ADD_ITEM && <h3>Add Item</h3>}
+                  {currentPage === Pages.EDIT_ITEM && <h3>Edit Item</h3>}
                 </div>
                 {currentPage === Pages.WISHLIST &&
                   wishlist.owner === currentUser?.id && (

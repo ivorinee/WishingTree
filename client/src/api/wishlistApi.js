@@ -150,3 +150,22 @@ export async function fetchPercentageComplete(wishlistId) {
     console.error("Error fetching percentage:", error.response?.data || error);
   }
 }
+
+export async function renameWishlist(id, name) {
+  try {
+    console.log(name);
+    await axios.post(
+      `${API_BASE_URL}/wishlists/rename/${id}`,
+      { name },
+      {
+        withCredentials: true,
+      }
+    );
+  } catch (error) {
+    console.error(
+      "Wishlist rename failed:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+}

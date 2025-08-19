@@ -10,6 +10,7 @@ import {
   unsaveWishlist,
   getSavedWishlists,
   calculatePercentageComplete,
+  renameWishlist,
 } from "../controllers/wishlistController.js";
 
 const router = express.Router();
@@ -24,5 +25,6 @@ router.post("/save/:id", saveWishlist);
 router.post("/unsave/:id", unsaveWishlist);
 router.get("/retrieve/saved", getSavedWishlists);
 router.post("/percentage", calculatePercentageComplete);
+router.post("/rename/:id", renameWishlist);
 
 export default router;
