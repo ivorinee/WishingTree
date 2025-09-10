@@ -261,6 +261,11 @@ function WishlistPage() {
                       refreshPage={loadData}
                     />
                   ))}
+                  {wishlistItems.length === 0 && (
+                    <div className="wishlist-empty-placeholder">
+                      <p>This wishlist has no items!</p>
+                    </div>
+                  )}
                 </div>
               )}
               {currentPage === Pages.ADD_ITEM && (

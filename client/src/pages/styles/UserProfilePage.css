@@ -1,0 +1,50 @@
+.user-page-main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.user-page-profile-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-page-profile {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.user-page-profile-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-page-id {
+  font-weight: 300;
+}
+
+.user-page-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  height: 2.5rem;
+}
+
+.user-page-wishlists {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.user-page-wishlists-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 4rem;
+  margin-bottom: 1rem;
+}

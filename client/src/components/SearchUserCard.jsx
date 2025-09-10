@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import { handleSendRequest } from "../api/userApi";
 import profilePic from "../assets/profile-1.svg";
@@ -13,6 +14,7 @@ function SearchUserCard({
   currentUserFriends = [],
   onButtonClick,
 }) {
+  const navigate = useNavigate();
   const isOwner = currentUser.id === id;
   const isFriend = currentUserFriends.includes(id);
   const hasSentRequest = userFriendRequests.includes(currentUser.id);
@@ -35,7 +37,7 @@ function SearchUserCard({
   }
 
   return (
-    <div className="search-user-card">
+    <div className="search-user-card" onClick={() => navigate(`/user/${id}`)}>
       <div className="search-user-profile">
         <img src={profilePic} className="home-page-profile-pic" />
         <div className="search-user-profile-details">

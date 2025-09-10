@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import Button from "./Button";
 import ConfirmationModal from "./ConfirmationModal";
 import "./styles/FriendRow.css";
 
 function FriendRow({ friend, type, accept, reject, refreshList }) {
   const { name, id } = friend;
+  const navigate = useNavigate();
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   return (
@@ -47,7 +49,11 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
             </>
           ) : (
             <>
-              <Button style="view-friend-button" name="VIEW" />
+              <Button
+                style="view-friend-button"
+                name="VIEW"
+                onClick={() => navigate(`../user/${id}`)}
+              />
               <Button
                 style="remove-friend-button"
                 name="REMOVE FRIEND"

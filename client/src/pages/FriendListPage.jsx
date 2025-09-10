@@ -29,16 +29,6 @@ function FriendListPage() {
     console.log(friendRequestDetails);
   }
 
-  async function acceptFriendRequest(id) {
-    await acceptRequest(id);
-    loadData();
-  }
-
-  async function rejectFriendRequest(id) {
-    await rejectRequest(id);
-    loadData();
-  }
-
   useEffect(() => {
     loadData();
   }, []);
@@ -72,8 +62,8 @@ function FriendListPage() {
                   key={request.id}
                   friend={{ name: request.name, id: request.id }}
                   type="request"
-                  accept={acceptFriendRequest}
-                  reject={rejectFriendRequest}
+                  accept={() => acceptRequest(request.id, loadData)}
+                  reject={() => rejectRequest(request.id, loadData)}
                 />
               ))}
             </div>

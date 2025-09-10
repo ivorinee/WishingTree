@@ -96,6 +96,13 @@
   gap: 0.5rem;
 }
 
+.wishlist-empty-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6rem;
+}
+
 .wishlist-fixed-bottom-box {
   padding: 0.5rem 3rem;
   border-top: 3px solid #151515;

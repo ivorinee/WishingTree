@@ -33,6 +33,7 @@ function WishlistCard({
   id,
   title,
   owner,
+  saved,
   progress,
   privacy,
   link,
@@ -95,7 +96,7 @@ function WishlistCard({
               )}
             </div>
             <div className="wishlist-card-footer">
-              {!owner && (
+              {!owner && saved && (
                 <button
                   className={`privacy-toggle ${isPrivate ? "private" : ""}`}
                   onClick={() => setIsPrivate(!isPrivate)}

@@ -8,7 +8,7 @@ import { fetchCurrentUser, fetchUserDetails } from "../api/userApi";
 import {
   fetchPercentageComplete,
   fetchSavedWishlists,
-  fetchWishlists,
+  fetchMyWishlists,
 } from "../api/wishlistApi";
 import { getReservedItems } from "../api/itemApi";
 import profilePic from "../assets/profile-1.svg";
@@ -50,7 +50,7 @@ function HomePage() {
 
   async function loadPersonalWishlists() {
     const userData = await fetchCurrentUser();
-    const wishlistData = await fetchWishlists();
+    const wishlistData = await fetchMyWishlists();
     setName(userData.name);
     setPersonalWishlists(wishlistData);
 
@@ -196,6 +196,7 @@ function HomePage() {
                       <WishlistCard
                         key={wishlist.id}
                         id={wishlist.id}
+                        saved={false}
                         title={wishlist.name}
                         progress={personalPercentage[wishlist.id]}
                         privacy={wishlist.privacy_status}

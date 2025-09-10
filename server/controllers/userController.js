@@ -42,8 +42,7 @@ export async function findUser(req, res) {
   }
 }
 
-// NOT USED YET
-export async function getUserName(req, res) {
+export async function getUser(req, res) {
   try {
     const { userId } = req.body;
     const user = await findUserById(userId);

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export async function fetchWishlists() {
+export async function fetchMyWishlists() {
   try {
     const response = await axios.get(`${API_BASE_URL}/wishlists/retrieve/my`, {
       withCredentials: true,
@@ -167,5 +167,23 @@ export async function renameWishlist(id, name) {
       error.response?.data || error.message
     );
     throw error;
+  }
+}
+
+export async function fetchUserWishlists(userId, friend = false) {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/wishlists/retrieve/user/${userId}`,
+      { friend },
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.wishlists;
+  } catch (err) {
+    console.error(
+      "Wishlists retrieval failed:",
+      err.response?.data || err.message
+    );
   }
 }

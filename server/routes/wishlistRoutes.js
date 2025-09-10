@@ -18,7 +18,7 @@ const router = express.Router();
 router.post("/create", createWishlist);
 router.post("/delete", deleteWishlist);
 router.get("/retrieve/my", getOwnWishlists);
-router.get("/retrieve/user", getUserWishlists);
+router.post("/retrieve/user/:id", getUserWishlists);
 router.get("/:id", getWishlistDetails);
 router.post("/privacy/set", setPrivacyStatus);
 router.post("/save/:id", saveWishlist);

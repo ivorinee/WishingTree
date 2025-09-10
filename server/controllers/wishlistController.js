@@ -1,8 +1,9 @@
 import {
   insertWishlist,
   removeWishlist,
-  getWishlistByOwner,
-  getWishlistById,
+  getWishlistsByOwner,
+  getPublicWishlistsByOwner,
+  getWishlistsById,
   updatePrivacyStatus,
   insertToSavedWishlist,
   removeFromSavedWishlist,
@@ -40,10 +41,16 @@ export async function deleteWishlist(req, res) {
 }
 
 export async function getUserWishlists(req, res) {
-  const userId = req.user.id;
+  const { id } = req.params;
+  const { friend } = req.body;
   try {
-    const wishlists = await getWishlistByOwner(userId);
-    return res.status(200).json({ message: "Wishlists retrieved", wishlists });
+    if (friend) {
+      const wishlists = await getWishlistsByOwner(id);
+      return res.status(200).json({ message: "Wishlists retrieved", wishlists });
+    } else {
+      const wishlists = await getPublicWishlistsByOwner(id);
+      return res.status(200).json({ message: "Wishlists retrieved", wishlists });
+    }
   } catch (err) {
     console.error("Wishlist error:", err);
     return res.status(500).json({ message: "Error retrieving wishlists" });
@@ -53,7 +60,7 @@ export async function getUserWishlists(req, res) {
 export async function getOwnWishlists(req, res) {
   const userId = req.user.id;
   try {
-    const wishlists = await getWishlistByOwner(userId);
+    const wishlists = await getWishlistsByOwner(userId);
     return res.status(200).json({ message: "Wishlists retrieved", wishlists });
   } catch (err) {
     console.error("Wishlist error:", err);
@@ -65,7 +72,7 @@ export async function getWishlistDetails(req, res) {
   const { id } = req.params;
   const userId = req.user.id;
   try {
-    const wishlistDetails = await getWishlistById(id);
+    const wishlistDetails = await getWishlistsById(id);
     if (
       wishlistDetails.owner === userId ||
       wishlistDetails.privacy_status == false
@@ -167,8 +174,6 @@ export async function renameWishlist(req, res) {
     return res.status(200).json({ message: "Wishlist rename:", wishlist });
   } catch (err) {
     console.error("Wishlist error:", err);
-    return res
-      .status(500)
-      .json({ message: "Error renaming wishlist" });
+    return res.status(500).json({ message: "Error renaming wishlist" });
   }
 }

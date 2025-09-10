@@ -57,7 +57,7 @@ export async function handleSendRequest(id, onButtonClick) {
   }
 }
 
-export async function acceptRequest(id) {
+export async function acceptRequest(id, onButtonClick) {
   try {
     await axios.post(
       `${API_BASE_URL}/users/acceptrequest`,
@@ -66,12 +66,13 @@ export async function acceptRequest(id) {
         withCredentials: true,
       }
     );
+    onButtonClick();
   } catch (error) {
     console.error("Error fetching user:", error.response?.data || error);
   }
 }
 
-export async function rejectRequest(id) {
+export async function rejectRequest(id, onButtonClick) {
   try {
     await axios.post(
       `${API_BASE_URL}/users/rejectrequest`,
@@ -80,6 +81,7 @@ export async function rejectRequest(id) {
         withCredentials: true,
       }
     );
+    onButtonClick();
   } catch (error) {
     console.error("Error fetching user:", error.response?.data || error);
   }

@@ -23,14 +23,21 @@ export async function removeWishlist(wishlistId) {
   return result.rows[0];
 }
 
-export async function getWishlistByOwner(ownerId) {
+export async function getWishlistsByOwner(ownerId) {
   const result = await pool.query("SELECT * FROM wishlists WHERE owner = $1", [
     ownerId,
   ]);
   return result.rows;
 }
 
-export async function getWishlistById(id) {
+export async function getPublicWishlistsByOwner(ownerId) {
+  const result = await pool.query("SELECT * FROM wishlists WHERE owner = $1 AND privacy_status = 'false'", [
+    ownerId,
+  ]);
+  return result.rows;
+}
+
+export async function getWishlistsById(id) {
   const result = await pool.query("SELECT * FROM wishlists WHERE id = $1", [
     id,
   ]);

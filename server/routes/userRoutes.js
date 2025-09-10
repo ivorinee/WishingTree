@@ -1,7 +1,7 @@
 import express from "express";
 import {
   findUser,
-  getUserName,
+  getUser,
   getOwnName,
   sendFriendRequest,
   acceptFriendRequest,
@@ -17,7 +17,7 @@ router.get("/search/:query", findUser);
 router.get("/name/my", getOwnName);
 router.get("/requests", retrieveFriendRequests);
 router.get("/friends", retrieveFriends);
-router.post("/user", getUserName);
+router.post("/user", getUser);
 router.post("/sendrequest", sendFriendRequest);
 router.post("/acceptrequest", acceptFriendRequest);
 router.post("/rejectrequest", rejectFriendRequest);
