@@ -8,6 +8,7 @@ import linkIcon from "../assets/link-icon.svg";
 import lockIcon from "../assets/lock-icon.svg";
 import unlockIcon from "../assets/unlock-icon.svg";
 import binIcon from "../assets/big-bin-icon.svg";
+import arrowIcon from "../assets/right-icon.svg";
 import "./styles/WishlistCard.css";
 
 const COLOR_SCHEMES = {
@@ -43,7 +44,7 @@ function WishlistCard({
 }) {
   const navigate = useNavigate();
   const [isPrivate, setIsPrivate] = useState(privacy);
-  const scheme = COLOR_SCHEMES[color] || COLOR_SCHEMES.pink;
+  const scheme = COLOR_SCHEMES[color];
 
   async function removeSavedWishlist() {
     await unsaveWishlist(id);
@@ -128,7 +129,8 @@ function WishlistCard({
                 style={{ backgroundColor: scheme.mainColor }}
                 onClick={() => navigate(`/wishlist/${id}`)}
               >
-                VIEW
+                <p>VIEW</p>
+                <img src={arrowIcon} alt="arrow" className="btn-arrow"/>
               </button>
             </div>
           </div>

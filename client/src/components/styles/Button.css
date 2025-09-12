@@ -11,9 +11,39 @@
   gap: 1rem;
 }
 
+.universal-button:hover {
+  box-shadow: 0 0 0 0.5px #151515;
+}
+
 .authentication-button {
   width: 20rem;
   height: 3rem;
+}
+
+.view-button {
+  flex: 1;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  border: 2px solid #151515;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.view-button:hover {
+  justify-content: space-between;
+}
+
+.btn-arrow {
+  width: 0.5rem;
+  opacity: 0;
+}
+
+.view-button:hover .btn-arrow {
+  opacity: 1;
 }
 
 .sort-button {
@@ -48,6 +78,10 @@
   border: 0px;
   padding: 0rem;
   background-color: transparent;
+}
+
+.wishlist-button-navbar:hover {
+  box-shadow: none;
 }
 
 .link-button {

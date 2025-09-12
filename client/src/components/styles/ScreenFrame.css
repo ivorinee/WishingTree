@@ -29,7 +29,7 @@ body,
 }
 
 .fixed-top-box {
-  padding: 0.6rem 6rem;
+  padding: 0.5rem 6rem;
   border-bottom: 3px solid #151515;
   background: #c8e7fb;
   position: sticky;
@@ -119,6 +119,14 @@ body,
   font-weight: 500;
   padding: 1rem 2rem;
   background: transparent;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  border-radius: 30px;
+}
+
+.logged-in-button:hover {
+  border: 3px solid #151515;
+  background-color: #ffffff;
 }
 
 .scrollable-content {
