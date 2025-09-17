@@ -75,7 +75,8 @@ export async function getWishlistDetails(req, res) {
     const wishlistDetails = await getWishlistsById(id);
     if (
       wishlistDetails.owner === userId ||
-      wishlistDetails.privacy_status == false
+      wishlistDetails.privacy_status == false || 
+      wishlistDetails.saved_by.includes(userId)
     ) {
       return res.status(200).json({
         message: "Wishlist Details retrieved",

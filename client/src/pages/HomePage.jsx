@@ -171,7 +171,7 @@ function HomePage() {
             <div className="home-page-wishlists">
               <div className="home-page-wishlists-title">
                 <h1>Your Wishlists</h1>
-                <Button style="sort-button" name="SORT" image={sortIcon} />
+                {/* <Button style="sort-button" name="SORT" image={sortIcon} /> */}
               </div>
               <div className="wishlists-content">
                 {displayedPersonalWishlists.length >= 1 && (
@@ -235,7 +235,7 @@ function HomePage() {
           <div className="home-page-wishlists">
             <div className="home-page-wishlists-title">
               <h1>Saved Wishlists</h1>
-              <Button style="sort-button" name="SORT" image={sortIcon} />
+              {/* <Button style="sort-button" name="SORT" image={sortIcon} /> */}
             </div>
             <div className="wishlists-content">
               {displayedSavedWishlists.length >= 1 && (

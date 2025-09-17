@@ -145,7 +145,6 @@ function UserProfilePage() {
             {!friend && friendRequest == "" && (
               <Button
                 name="Add Friend"
-                // style={` searchUserButton`}
                 onClick={() => handleSendRequest(id, loadData)}
               />
             )}
@@ -155,7 +154,7 @@ function UserProfilePage() {
         <div className="user-page-wishlists">
           <div className="user-page-wishlists-title">
             <h1>{name}'s Wishlists</h1>
-            <Button style="sort-button" name="SORT" image={sortIcon} />
+            {/* <Button style="sort-button" name="SORT" image={sortIcon} /> */}
           </div>
           <div className="wishlists-content">
             {userWishlists.length >= 1 && (
@@ -168,7 +167,7 @@ function UserProfilePage() {
             )}
             {userWishlists.length === 0 ? (
               <div className="wishlists-empty-placeholder">
-                <p>You have no existing wishlists!</p>
+                <p>This user has no existing wishlists!</p>
               </div>
             ) : (
               <div className="wishlists-cards">
