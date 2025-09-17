@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import Button from "../components/Button";
 import LabeledForm from "../components/LabeledForm";
 import ScreenFrame from "../components/ScreenFrame";
+import { register, login } from "../api/authApi";
 import "./styles/AuthenticationPages.css";
 
 function SignUpPage() {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     name: "",
@@ -54,20 +53,11 @@ function SignUpPage() {
       setError("Passwords do not match.");
     } else {
       try {
-        const response = await axios.post(
-          `${API_BASE_URL}/auth/signup`,
-          {
-            name: formValues.name,
-            email: formValues.email,
-            password: formValues.password,
-          },
-          { withCredentials: true }
-        );
+        await register(formValues.name, formValues.email, formValues.password);
+        await login(formValues.email, formValues.password);
         setError("");
-        console.log("Login successful:", response.data);
         navigate("/home");
       } catch (error) {
-        console.error("Login failed:", error.response?.data || error.message);
         setError(error.response.data.message);
       }
     }

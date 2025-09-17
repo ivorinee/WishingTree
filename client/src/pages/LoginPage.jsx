@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import Button from "../components/Button";
 import LabeledForm from "../components/LabeledForm";
 import ScreenFrame from "../components/ScreenFrame";
+import { login } from "../api/authApi";
 import shootingStar from "../assets/shooting-star.svg";
 import "./styles/AuthenticationPages.css";
 
 function LoginPage() {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     email: "",
@@ -20,27 +19,32 @@ function LoginPage() {
   ];
   const [error, setError] = useState("");
 
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
   function handleChange(e) {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   }
 
   async function handleLogin(e) {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/auth/login`,
-        {
-          email: formValues.email,
-          password: formValues.password,
-        },
-        { withCredentials: true }
-      );
-      setError("");
-      console.log("Login successful:", response.data);
-      navigate("/home");
-    } catch (error) {
-      console.error("Login failed:", error.response?.data || error.message);
-      setError(error.response.data.message);
+    if (
+      formValues.name == "" ||
+      formValues.email == "" ||
+      formValues.password == "" ||
+      formValues.confirmPassword == ""
+    ) {
+      setError("Please complete all required fields.");
+    } else if (!isEmail(formValues.email)) {
+      setError("Please enter a valid email address.");
+    } else {
+      try {
+        await login(formValues.email, formValues.password);
+        setError("");
+        navigate("/home");
+      } catch (error) {
+        setError(error.response.data.message);
+      }
     }
   }
 
@@ -58,7 +62,7 @@ function LoginPage() {
               values={formValues}
               onChange={handleChange}
             />
-            <p className="authentication-error-placeholder">{error}</p>
+            <p className="error-placeholder">{error}</p>
           </div>
           <div className="authentication-button-container">
             <Button

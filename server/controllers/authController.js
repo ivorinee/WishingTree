@@ -48,3 +48,10 @@ export async function logoutUser(req, res) {
     return res.status(200).json({ message: "Logged out successfully" });
   });
 }
+
+export async function checkAuth(req, res) {
+  if (req.isAuthenticated()) {
+    return res.status(200).json({ loggedIn: true, user: req.user });
+  }
+  return res.status(401).json({ loggedIn: false });
+}
