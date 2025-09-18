@@ -11,7 +11,7 @@ import {
   fetchMyWishlists,
 } from "../api/wishlistApi";
 import { getReservedItems } from "../api/itemApi";
-import profilePic from "../assets/profile-1.svg";
+import { getProfileIcon } from "../utils/profileIcons";
 import sortIcon from "../assets/sort-icon.svg";
 import rightIcon from "../assets/right-icon.svg";
 import leftIcon from "../assets/left-icon.svg";
@@ -20,6 +20,7 @@ import "./styles/HomePage.css";
 function HomePage() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [profileIcon, setProfileIcon] = useState(0);
   const [newWishlistModal, setNewWishlistModal] = useState(false);
   const [reservedGifts, setReservedGifts] = useState(0);
   const itemsPerPage = 2;
@@ -53,6 +54,7 @@ function HomePage() {
     const wishlistData = await fetchMyWishlists();
     setName(userData.name);
     setPersonalWishlists(wishlistData);
+    setProfileIcon(userData.profile_icon);
 
     const pages = Math.ceil(wishlistData.length / itemsPerPage);
     setTotalPersonalPages(pages);
@@ -150,7 +152,7 @@ function HomePage() {
         <div className="home-page-main-container">
           <div className="home-page-top-section">
             <div className="home-page-profile">
-              <img src={profilePic} className="home-page-profile-pic" />
+              <img src={getProfileIcon(profileIcon)} className="home-page-profile-pic" />
               <div className="home-page-profile-text">
                 <h1>Hey {name}!</h1>
                 <p>Ready to drop some hints?</p>
@@ -197,6 +199,7 @@ function HomePage() {
                         key={wishlist.id}
                         id={wishlist.id}
                         saved={false}
+                        owner={true}
                         title={wishlist.name}
                         progress={personalPercentage[wishlist.id]}
                         privacy={wishlist.privacy_status}
@@ -258,6 +261,7 @@ function HomePage() {
                     <WishlistCard
                       key={wishlist.id}
                       id={wishlist.id}
+                      saved={true}
                       owner={savedOwners[wishlist.owner]}
                       title={wishlist.name}
                       progress={savedPercentage[wishlist.id]}

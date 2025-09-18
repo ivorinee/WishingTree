@@ -1,6 +1,6 @@
 import { pool } from "../config/db.js";
 import bcrypt from "bcrypt";
-import { generateUnique4DigitCode } from "./idModel.js";
+import { generateUnique4DigitCode, generateProfileIcon } from "./idModel.js";
 
 export async function findUserById(id) {
   const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
@@ -25,9 +25,10 @@ export async function findUserByName(name) {
 
 export async function createUser(name, email, password) {
   const id = await generateUnique4DigitCode();
+  const profileIcon = await generateProfileIcon();
   const result = await pool.query(
-    "INSERT INTO users (id, name, email, password) VALUES ($1, $2, $3, $4)",
-    [id, name, email, password]
+    "INSERT INTO users (id, name, email, password, profile_icon) VALUES ($1, $2, $3, $4, $5)",
+    [id, name, email, password, profileIcon]
   );
   return result.rows[0];
 }

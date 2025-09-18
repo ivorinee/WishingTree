@@ -14,7 +14,7 @@ import {
   fetchUserWishlists,
   fetchPercentageComplete,
 } from "../api/wishlistApi";
-import profilePic from "../assets/profile-1.svg";
+import { getProfileIcon } from "../utils/profileIcons";
 import sortIcon from "../assets/sort-icon.svg";
 import rightIcon from "../assets/right-icon.svg";
 import leftIcon from "../assets/left-icon.svg";
@@ -23,7 +23,8 @@ import "./styles/UserProfilePage.css";
 function UserProfilePage() {
   const id = useParams().id;
   const navigate = useNavigate();
-  const [name, setName] = useState("Alice");
+  const [name, setName] = useState("");
+  const [profileIcon, setProfileIcon] = useState(0);
   const [friend, setFriend] = useState(false);
   const [friendRequest, setFriendRequest] = useState("");
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -40,7 +41,7 @@ function UserProfilePage() {
   async function loadData() {
     const userData = await fetchUserDetails(id);
     const currentUserData = await fetchCurrentUser();
-    
+
     let isFriend = false;
     let requestStatus = "";
     if (
@@ -63,6 +64,7 @@ function UserProfilePage() {
     const wishlistData = await fetchUserWishlists(id, isFriend);
     setName(userData.name);
     setUserWishlists(wishlistData);
+    setProfileIcon(userData.profile_icon);
 
     const pages = Math.ceil(wishlistData.length / itemsPerPage);
     setTotalPages(pages);
@@ -102,14 +104,24 @@ function UserProfilePage() {
       <div className="user-page-main-container">
         <div className="user-page-profile-container">
           <div className="user-page-profile">
-            <img src={profilePic} className="user-page-profile-pic" />
+            <img
+              src={getProfileIcon(profileIcon)}
+              className="user-page-profile-pic"
+            />
             <div className="user-page-profile-text">
               <h1>{name}</h1>
               <p className="user-page-id">ID: {id}</p>
             </div>
           </div>
           <div className="user-page-actions">
-            {friend && <Button name="View Friends" onClick={() => {navigate(`/${id}/friends`)}}/>}
+            {friend && (
+              <Button
+                name="View Friends"
+                onClick={() => {
+                  navigate(`/${id}/friends`);
+                }}
+              />
+            )}
             {friend && (
               <Button
                 name="Remove Friend"

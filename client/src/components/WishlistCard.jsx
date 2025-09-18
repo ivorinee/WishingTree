@@ -45,6 +45,7 @@ function WishlistCard({
   const navigate = useNavigate();
   const [isPrivate, setIsPrivate] = useState(privacy);
   const scheme = COLOR_SCHEMES[color];
+  console.log(!owner && !saved)
 
   async function removeSavedWishlist() {
     await unsaveWishlist(id);
@@ -97,7 +98,7 @@ function WishlistCard({
               )}
             </div>
             <div className="wishlist-card-footer">
-              {!owner && !saved && (
+              {owner && !saved && (
                 <button
                   className={`privacy-toggle ${isPrivate ? "private" : ""}`}
                   onClick={() => setIsPrivate(!isPrivate)}
@@ -117,7 +118,7 @@ function WishlistCard({
                   </div>
                 </button>
               )}
-              {owner && (
+              {saved && (
                 <Button
                   image={binIcon}
                   style="bin-button"

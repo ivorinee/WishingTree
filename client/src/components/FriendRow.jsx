@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import Button from "./Button";
 import ConfirmationModal from "./ConfirmationModal";
+import { getProfileIcon } from "../utils/profileIcons";
 import "./styles/FriendRow.css";
 
 function FriendRow({ friend, type, accept, reject, refreshList }) {
-  const { name, id } = friend;
   const navigate = useNavigate();
+  const { name, id, profileIcon } = friend;
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   return (
@@ -25,9 +26,13 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
         }`}
       >
         <div className="friend-info">
-          <div className="friend-avatar">
-            <img />
-          </div>
+          {/* <div className="friend-avatar">
+            <img src={profilePic} className="friend-profile-pic" />
+          </div> */}
+          <img
+            src={getProfileIcon(profileIcon)}
+            className="friend-profile-pic"
+          />
           <div className="friend-details">
             <p className="friend-item-name">{name}</p>
             <p className="friend-item-id">ID: {id}</p>

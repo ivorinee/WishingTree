@@ -17,6 +17,10 @@
   gap: 2rem;
 }
 
+.user-page-profile-pic {
+  width: 6rem;
+}
+
 .user-page-profile-text {
   display: flex;
   flex-direction: column;

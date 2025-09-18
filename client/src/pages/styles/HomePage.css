@@ -21,6 +21,10 @@
   gap: 2rem;
 }
 
+.home-page-profile-pic {
+  width: 6rem;
+}
+
 .home-page-profile-text {
   display: flex;
   flex-direction: column;

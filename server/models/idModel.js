@@ -53,3 +53,7 @@ export async function generateUnique6DigitCode() {
 
   return code;
 }
+
+export async function generateProfileIcon() {
+  return Math.floor(1 + Math.random() * 8);
+}
