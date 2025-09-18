@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import ScreenFrame from "../components/ScreenFrame";
 import Button from "../components/Button";
 import WishlistCard from "../components/WishlistCard";
@@ -22,6 +22,7 @@ import "./styles/UserProfilePage.css";
 
 function UserProfilePage() {
   const id = useParams().id;
+  const navigate = useNavigate();
   const [name, setName] = useState("Alice");
   const [friend, setFriend] = useState(false);
   const [friendRequest, setFriendRequest] = useState("");
@@ -108,7 +109,7 @@ function UserProfilePage() {
             </div>
           </div>
           <div className="user-page-actions">
-            {friend && <Button name="View Friends" />}
+            {friend && <Button name="View Friends" onClick={() => {navigate(`/${id}/friends`)}}/>}
             {friend && (
               <Button
                 name="Remove Friend"

@@ -21,10 +21,12 @@ function ReservedGiftItem({
       <div className="reserved-gift-top-container">
         <p className="reserved-gift-recipient">For: {recipient}</p>
         <Button
-          name="View Wishlist &nbsp; >"
           style="view-wishlist-button"
           onClick={() => navigate(`../wishlist/${wishlistId}`)}
-        />
+        >
+          <span className="text">View Wishlist</span>
+          <span className="arrow">&gt;</span>
+        </Button>
       </div>
       <div className="reserved-gift-bottom-container">
         <div className="reserved-gift-details">

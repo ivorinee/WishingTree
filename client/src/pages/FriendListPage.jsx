@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
 import ScreenFrame from "../components/ScreenFrame";
 import FriendRow from "../components/FriendRow";
 import {
@@ -10,23 +11,39 @@ import {
 import "./styles/FriendListPage.css";
 
 function FriendListPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [friends, setFriends] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
 
   async function loadData() {
-    const userData = await fetchCurrentUser();
-    console.log(userData);
+    let userData;
+    if (!id) {
+      // load own friend list
+      userData = await fetchCurrentUser();
+      // only fetch friend requests if viewing own profile
+      const friendRequestDetails = await Promise.all(
+        userData.friend_requests.map((id) => fetchUserDetails(id))
+      );
+      setFriendRequests(friendRequestDetails);
+    } else {
+      // load another user's friend list
+      userData = await fetchUserDetails(id);
+
+      // if trying to view own profile, redirect to /friends
+      const currentUser = await fetchCurrentUser();
+      if (userData.id === currentUser.id) {
+        navigate("/friends");
+      } else {
+        setName(userData.name);
+      }
+    }
+
     const friendDetails = await Promise.all(
       userData.friends.map((id) => fetchUserDetails(id))
     );
-    const friendRequestDetails = await Promise.all(
-      userData.friend_requests.map((id) => fetchUserDetails(id))
-    );
-
     setFriends(friendDetails);
-    setFriendRequests(friendRequestDetails);
-    console.log(friendDetails);
-    console.log(friendRequestDetails);
   }
 
   useEffect(() => {
@@ -36,14 +53,14 @@ function FriendListPage() {
   return (
     <ScreenFrame>
       <div className="friend-list-page-main-container">
-        <h1>Friend List</h1>
+        <h1>{id ? `${name}'s` : ""} Friend List</h1>
         <div className="friend-list-container">
           <div className="friend-list">
             {friends.map((friend, index) => (
               <div key={friend.id}>
                 <FriendRow
                   friend={{ name: friend.name, id: friend.id }}
-                  type="friend"
+                  type={id ? "" : "friend"}
                   refreshList={loadData}
                 />
                 {index < friends.length - 1 && (

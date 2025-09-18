@@ -22,6 +22,7 @@ function App() {
         <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
         <Route path="/wishlist/:id" element={<WishlistPage />} />
         <Route path="/friends" element={<PrivateRoute><FriendListPage /></PrivateRoute>} />
+        <Route path="/:id/friends" element={<PrivateRoute><FriendListPage /></PrivateRoute>} />
         <Route path="/search/:query" element={<PrivateRoute><SearchPage /></PrivateRoute>} />
         <Route path="/reserved-gifts" element={<PrivateRoute><ReservedGiftPage /></PrivateRoute>} />
         <Route path="/user/:id" element={<PrivateRoute><UserProfilePage /></PrivateRoute>} />

@@ -135,6 +135,17 @@ export async function retrieveFriends(req, res) {
   }
 }
 
+export async function retrieveFriendsById(req, res) {
+  try {
+    const { id } = req.params;
+    const friends = await getFriends(id);
+    return res.status(200).json({ message: "Friends retrieved", friends });
+  } catch (err) {
+    console.error("Error getting friend list:", err);
+    return res.status(500).json({ message: "Error getting friend list" });
+  }
+}
+
 export async function rejectFriendRequest(req, res) {
   try {
     const userId = req.user.id;

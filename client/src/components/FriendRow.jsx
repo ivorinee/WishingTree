@@ -34,7 +34,7 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
           </div>
         </div>
         <div className="friend-actions">
-          {type === "request" ? (
+          {type === "request" && (
             <>
               <Button
                 style="accept-friend-button"
@@ -47,7 +47,8 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
                 onClick={() => reject(id)}
               />
             </>
-          ) : (
+          )}{" "}
+          {type === "friend" && (
             <>
               <Button
                 style="view-friend-button"
@@ -60,6 +61,13 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
                 onClick={() => setConfirmationModal(true)}
               />
             </>
+          )}{" "}
+          {type === "" && (
+            <Button
+              style="view-friend-button"
+              name="VIEW"
+              onClick={() => navigate(`../user/${id}`)}
+            />
           )}
         </div>
       </div>

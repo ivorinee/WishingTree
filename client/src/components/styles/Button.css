@@ -129,9 +129,17 @@
   cursor: not-allowed;
 }
 
-disabled {
+.disabled:hover {
+  box-shadow: none;
+}
+
+/* disabled {
   cursor: not-allowed;
 }
+
+disabled:hover {
+  box-shadow: none;
+} */
 
 .close-button {
   padding: 1rem;
@@ -181,10 +189,29 @@ disabled {
   cursor: not-allowed;
 }
 
+.opacity-disabled:hover {
+  box-shadow: none;
+}
+
+
 .view-wishlist-button {
-  padding: 0 0.5rem 0 1rem;
+  padding: 0.5rem 1rem 0.5rem 3rem;
   border: none;
   background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.view-wishlist-button:hover {
+  box-shadow: none;
+  gap: 3rem; 
+}
+
+.view-wishlist-button:hover .arrow {
+  transform: translateX(4px); 
+  font-weight: 600;
 }
 
 .unreserve-button {

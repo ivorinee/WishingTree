@@ -22,6 +22,7 @@ function SignUpPage() {
   ];
   const [error, setError] = useState("");
 
+  const isCapitalized = (str) => /[A-Z]/.test(str);
   const isEmail = (email) =>
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
   const isValidPassword = (password) =>
@@ -43,6 +44,8 @@ function SignUpPage() {
       formValues.confirmPassword == ""
     ) {
       setError("Please complete all required fields.");
+    } else if (!isCapitalized(formValues.name[0])) {
+      setError("Name must start with a capital letter.");
     } else if (!isEmail(formValues.email)) {
       setError("Please enter a valid email address.");
     } else if (!isValidPassword(formValues.password)) {
