@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Button from "./Button";
 import { deleteItemInWishlist } from "../api/itemApi";
 import { removeFriend } from "../api/userApi";

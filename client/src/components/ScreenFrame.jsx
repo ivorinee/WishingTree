@@ -5,6 +5,7 @@ import loginIcon from "../assets/login-icon.svg";
 import signUpIcon from "../assets/sign-up-icon.svg";
 import unwrapGiftIcon from "../assets/unwrap-gift-icon.svg";
 import searchIcon from "../assets/search-icon.svg";
+import burgerIcon from "../assets/burger-icon.svg";
 import "./styles/ScreenFrame.css";
 
 function ScreenFrame({ children }) {
@@ -26,6 +27,7 @@ function ScreenFrame({ children }) {
     ...navItems.filter((item) => item.path !== path),
   ];
   const [searchInput, setSearchInput] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function handleNavigation(newPath) {
     if (newPath === path) {
@@ -51,7 +53,17 @@ function ScreenFrame({ children }) {
           <div className="fixed-top-box">
             <div className="unlogged-in-container">
               <img className="unlogged-in-navbar-icon" src={currentLabel} />
-              <div className="unlogged-in-navbar">
+              <button
+                className={`unlogged-in-burger ${menuOpen ? "burger-open" : ""}`}
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                <img className="burger" src={burgerIcon} />
+              </button>
+              <div
+                className={`unlogged-in-navbar ${
+                  menuOpen ? "unlogged-in-burger-open" : ""
+                }`}
+              >
                 {sortedNav.map((item) => (
                   <div
                     key={item.path}
@@ -83,7 +95,7 @@ function ScreenFrame({ children }) {
           <div className="fixed-top-box">
             <div className="logged-in-container">
               <div className="search-wrapper">
-                <img src={searchIcon} />
+                <img className="search" src={searchIcon} />
                 <input
                   className="search-input"
                   placeholder="Search User/ID"
@@ -95,7 +107,17 @@ function ScreenFrame({ children }) {
                   }}
                 ></input>
               </div>
-              <div className="logged-in-navbar">
+              <button
+                className={`logged-in-burger ${menuOpen ? "burger-open" : ""}`}
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                <img className="burger" src={burgerIcon} />
+              </button>
+              <div
+                className={`logged-in-navbar ${
+                  menuOpen ? "logged-in-burger-open" : ""
+                }`}
+              >
                 <button
                   className="logged-in-button"
                   onClick={() => handleNavigation("/home")}

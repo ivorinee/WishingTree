@@ -59,7 +59,11 @@ function FriendListPage() {
             {friends.map((friend, index) => (
               <div key={friend.id}>
                 <FriendRow
-                  friend={{ name: friend.name, id: friend.id, profileIcon: friend.profile_icon }}
+                  friend={{
+                    name: friend.name,
+                    id: friend.id,
+                    profileIcon: friend.profile_icon,
+                  }}
                   type={id ? "" : "friend"}
                   refreshList={loadData}
                 />
@@ -68,6 +72,7 @@ function FriendListPage() {
                 )}
               </div>
             ))}
+            {friends.length === 0 && <p>You have no friends at the moment!</p>}
           </div>
         </div>
         {friendRequests.length > 0 && (
@@ -77,7 +82,11 @@ function FriendListPage() {
               {friendRequests.map((request) => (
                 <FriendRow
                   key={request.id}
-                  friend={{ name: request.name, id: request.id, profileIcon: request.profile_icon }}
+                  friend={{
+                    name: request.name,
+                    id: request.id,
+                    profileIcon: request.profile_icon,
+                  }}
                   type="request"
                   accept={() => acceptRequest(request.id, loadData)}
                   reject={() => rejectRequest(request.id, loadData)}
