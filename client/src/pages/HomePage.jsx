@@ -23,11 +23,10 @@ function HomePage() {
   const [profileIcon, setProfileIcon] = useState(0);
   const [newWishlistModal, setNewWishlistModal] = useState(false);
   const [reservedGifts, setReservedGifts] = useState(0);
-  const itemsPerPage = 2;
+  const [itemsPerPage, setItemsPerPage] = useState(2);
 
   const [personalWishlists, setPersonalWishlists] = useState([]);
   const [personalPercentage, setPersonalPercentage] = useState({});
-  const [totalPersonalPages, setTotalPersonalPages] = useState(0);
   const [personalPage, setPersonalPage] = useState(0);
   const [personalLeftBtn, setPersonalLeftBtn] = useState(false);
   const [personalRightBtn, setPersonalRightBtn] = useState(false);
@@ -38,11 +37,17 @@ function HomePage() {
   const [savedWishlists, setSavedWishlists] = useState([]);
   const [savedOwners, setSavedOwners] = useState({});
   const [savedPercentage, setSavedPercentage] = useState({});
-  const [totalSavedPages, setTotalSavedPages] = useState(0);
   const [savedPage, setSavedPage] = useState(0);
   const [savedLeftBtn, setSavedLeftBtn] = useState(false);
   const [savedRightBtn, setSavedRightBtn] = useState(false);
   const [displayedSavedWishlists, setDisplayedSavedWishlist] = useState([]);
+
+  const totalPersonalPages = Math.ceil(personalWishlists.length / itemsPerPage);
+  const totalSavedPages = Math.ceil(savedWishlists.length / itemsPerPage);
+
+  function handleResize() {
+    setItemsPerPage(window.innerWidth <= 1000 ? 1 : 2);
+  }
 
   async function loadReservedGifts() {
     const reservedGifts = await getReservedItems();
@@ -55,9 +60,6 @@ function HomePage() {
     setName(userData.name);
     setPersonalWishlists(wishlistData);
     setProfileIcon(userData.profile_icon);
-
-    const pages = Math.ceil(wishlistData.length / itemsPerPage);
-    setTotalPersonalPages(pages);
 
     const percentageData = await Promise.all(
       wishlistData.map((wishlist) =>
@@ -78,9 +80,6 @@ function HomePage() {
   async function loadSavedWishlists() {
     const wishlistData = await fetchSavedWishlists();
     setSavedWishlists(wishlistData);
-
-    const pages = Math.ceil(wishlistData.length / itemsPerPage);
-    setTotalSavedPages(pages);
 
     const ownerData = await Promise.all(
       wishlistData.map((wishlist) =>
@@ -105,7 +104,6 @@ function HomePage() {
         }))
       )
     );
-    console.log(percentageData);
 
     const percentageMap = {};
     percentageData.forEach(({ id, percentage }) => {
@@ -115,9 +113,13 @@ function HomePage() {
   }
 
   useEffect(() => {
+    handleResize();
+    loadReservedGifts();
     loadPersonalWishlists();
     loadSavedWishlists();
-    loadReservedGifts();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -128,7 +130,7 @@ function HomePage() {
     setPersonalLeftBtn(personalPage > 0);
     setPersonalRightBtn(personalPage < totalPersonalPages - 1);
     setDisplayedPersonalWishlist(viewedWishlists);
-  }, [personalWishlists, personalPage]);
+  }, [personalWishlists, personalPage, itemsPerPage, totalPersonalPages]);
 
   useEffect(() => {
     const viewedWishlists = savedWishlists.slice(
@@ -138,7 +140,7 @@ function HomePage() {
     setSavedLeftBtn(savedPage > 0);
     setSavedRightBtn(savedPage < totalSavedPages - 1);
     setDisplayedSavedWishlist(viewedWishlists);
-  }, [savedWishlists, savedPage]);
+  }, [savedWishlists, savedPage, itemsPerPage, totalSavedPages]);
 
   return (
     <>
@@ -152,7 +154,10 @@ function HomePage() {
         <div className="home-page-main-container">
           <div className="home-page-top-section">
             <div className="home-page-profile">
-              <img src={getProfileIcon(profileIcon)} className="home-page-profile-pic" />
+              <img
+                src={getProfileIcon(profileIcon)}
+                className="home-page-profile-pic"
+              />
               <div className="home-page-profile-text">
                 <h1>Hey {name}!</h1>
                 <p>Ready to drop some hints?</p>
@@ -176,7 +181,64 @@ function HomePage() {
                 {/* <Button style="sort-button" name="SORT" image={sortIcon} /> */}
               </div>
               <div className="wishlists-content">
-                {displayedPersonalWishlists.length >= 1 && (
+                {itemsPerPage == 2 &&
+                  displayedPersonalWishlists.length >= 1 && (
+                    <Button
+                      style={`next-prev-button ${
+                        !personalLeftBtn ? "opacity-disabled" : ""
+                      }`}
+                      image={leftIcon}
+                      disabled={!personalLeftBtn}
+                      onClick={() =>
+                        setPersonalPage((prev) => Math.max(prev - 1, 0))
+                      }
+                    />
+                  )}
+                {displayedPersonalWishlists.length === 0 ? (
+                  <div className="wishlists-empty-placeholder">
+                    <p>You have no existing wishlists!</p>
+                  </div>
+                ) : (
+                  <div className={`wishlists-cards per-page-${itemsPerPage}`}>
+                    {displayedPersonalWishlists.map((wishlist) => {
+                      const globalIndex = personalWishlists.findIndex(
+                        (w) => w.id === wishlist.id
+                      );
+                      return (
+                        <WishlistCard
+                          key={wishlist.id}
+                          id={wishlist.id}
+                          saved={false}
+                          owner={true}
+                          title={wishlist.name}
+                          progress={personalPercentage[wishlist.id]}
+                          privacy={wishlist.privacy_status}
+                          link={wishlist.share_link}
+                          color={globalIndex % 2 === 0 ? "pink" : "purple"}
+                          side={globalIndex % 2 === 0 ? "left" : "right"}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+                {itemsPerPage == 2 &&
+                  displayedPersonalWishlists.length >= 1 && (
+                    <Button
+                      style={`next-prev-button ${
+                        !personalRightBtn ? "opacity-disabled" : ""
+                      }`}
+                      image={rightIcon}
+                      disabled={!personalRightBtn}
+                      onClick={() =>
+                        setPersonalPage((prev) =>
+                          Math.min(prev + 1, totalPersonalPages - 1)
+                        )
+                      }
+                    />
+                  )}
+              </div>
+              {itemsPerPage == 1 && displayedPersonalWishlists.length >= 1 && (
+                <div className="home-page-wishlist-buttons">
                   <Button
                     style={`next-prev-button ${
                       !personalLeftBtn ? "opacity-disabled" : ""
@@ -187,31 +249,6 @@ function HomePage() {
                       setPersonalPage((prev) => Math.max(prev - 1, 0))
                     }
                   />
-                )}
-                {displayedPersonalWishlists.length === 0 ? (
-                  <div className="wishlists-empty-placeholder">
-                    <p>You have no existing wishlists!</p>
-                  </div>
-                ) : (
-                  <div className="wishlists-cards">
-                    {displayedPersonalWishlists.map((wishlist, index) => (
-                      <WishlistCard
-                        key={wishlist.id}
-                        id={wishlist.id}
-                        saved={false}
-                        owner={true}
-                        title={wishlist.name}
-                        progress={personalPercentage[wishlist.id]}
-                        privacy={wishlist.privacy_status}
-                        link={wishlist.share_link}
-                        color={index % 2 === 0 ? "pink" : "purple"}
-                        side={index % 2 === 0 ? "left" : "right"}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                {displayedPersonalWishlists.length >= 1 && (
                   <Button
                     style={`next-prev-button ${
                       !personalRightBtn ? "opacity-disabled" : ""
@@ -224,8 +261,9 @@ function HomePage() {
                       )
                     }
                   />
-                )}
-              </div>
+                </div>
+              )}
+
               <div className="create-new-wishlist">
                 <Button
                   name="START A WISHLIST"
@@ -241,7 +279,7 @@ function HomePage() {
               {/* <Button style="sort-button" name="SORT" image={sortIcon} /> */}
             </div>
             <div className="wishlists-content">
-              {displayedSavedWishlists.length >= 1 && (
+              {itemsPerPage == 2 && displayedSavedWishlists.length >= 1 && (
                 <Button
                   style={`next-prev-button ${
                     !savedLeftBtn ? "opacity-disabled" : ""
@@ -256,25 +294,30 @@ function HomePage() {
                   <p>You have no saved wishlists!</p>
                 </div>
               ) : (
-                <div className="wishlists-cards">
-                  {displayedSavedWishlists.map((wishlist, index) => (
-                    <WishlistCard
-                      key={wishlist.id}
-                      id={wishlist.id}
-                      saved={true}
-                      owner={savedOwners[wishlist.owner]}
-                      title={wishlist.name}
-                      progress={savedPercentage[wishlist.id]}
-                      privacy={wishlist.privacy_status}
-                      link={wishlist.share_link}
-                      color={index % 2 === 0 ? "green" : "blue"}
-                      side={index % 2 === 0 ? "left" : "right"}
-                      func={loadSavedWishlists}
-                    />
-                  ))}
+                <div className={`wishlists-cards per-page-${itemsPerPage}`}>
+                  {displayedSavedWishlists.map((wishlist) => {
+                    const globalIndex = savedWishlists.findIndex(
+                      (w) => w.id === wishlist.id
+                    );
+                    return (
+                      <WishlistCard
+                        key={wishlist.id}
+                        id={wishlist.id}
+                        saved={true}
+                        owner={savedOwners[wishlist.owner]}
+                        title={wishlist.name}
+                        progress={savedPercentage[wishlist.id]}
+                        privacy={wishlist.privacy_status}
+                        link={wishlist.share_link}
+                        color={globalIndex % 2 === 0 ? "green" : "blue"}
+                        side={globalIndex % 2 === 0 ? "left" : "right"}
+                        func={loadSavedWishlists}
+                      />
+                    );
+                  })}
                 </div>
               )}
-              {displayedSavedWishlists.length >= 1 && (
+              {itemsPerPage == 2 && displayedSavedWishlists.length >= 1 && (
                 <Button
                   style={`next-prev-button ${
                     !savedRightBtn ? "opacity-disabled" : ""
@@ -289,7 +332,32 @@ function HomePage() {
                 />
               )}
             </div>
+            {itemsPerPage == 1 && displayedPersonalWishlists.length >= 1 && (
+              <div className="home-page-wishlist-buttons">
+                <Button
+                  style={`next-prev-button ${
+                    !savedLeftBtn ? "opacity-disabled" : ""
+                  }`}
+                  image={leftIcon}
+                  disabled={!savedLeftBtn}
+                  onClick={() => setSavedPage((prev) => Math.max(prev - 1, 0))}
+                />
+                <Button
+                  style={`next-prev-button ${
+                    !savedRightBtn ? "opacity-disabled" : ""
+                  }`}
+                  image={rightIcon}
+                  disabled={!savedRightBtn}
+                  onClick={() =>
+                    setSavedPage((prev) =>
+                      Math.min(prev + 1, totalSavedPages - 1)
+                    )
+                  }
+                />
+              </div>
+            )}
           </div>
+          {/* <div/> */}
         </div>
       </ScreenFrame>
     </>

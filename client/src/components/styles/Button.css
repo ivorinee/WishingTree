@@ -193,7 +193,6 @@ disabled:hover {
   box-shadow: none;
 }
 
-
 .view-wishlist-button {
   padding: 0.5rem 1rem 0.5rem 3rem;
   border: none;
@@ -206,14 +205,60 @@ disabled:hover {
 
 .view-wishlist-button:hover {
   box-shadow: none;
-  gap: 3rem; 
+  gap: 3rem;
 }
 
 .view-wishlist-button:hover .arrow {
-  transform: translateX(4px); 
+  transform: translateX(4px);
   font-weight: 600;
 }
 
 .unreserve-button {
   padding: 0.4rem 4rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .next-prev-button {
+    height: 2rem;
+    width: 5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .universal-button {
+    padding: 0.25rem 1rem;
+    white-space: nowrap;
+  }
+
+  .view-button {
+    padding: 0.25rem 1rem;
+  }
+
+  .next-prev-button {
+    width: 3rem;
+  }
+
+  .link-button {
+    padding: 0.4rem;
+  }
+
+  .bin-button {
+    padding: 0rem;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .bin-button img {
+    width: 60%;
+  }
+
+  .close-button {
+    padding: 0.2rem;
+    height: 2.6rem;
+    width: 2.6rem;
+  }
+
+  .create-wishlist-button {
+    width: 40vw;
+  }
 }

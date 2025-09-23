@@ -7,8 +7,8 @@ body,
 }
 
 .outer-layer {
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   overflow-x: hidden;
   padding: 1rem 2rem;
   box-sizing: border-box;
@@ -155,6 +155,7 @@ body,
 .scrollable-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   /* padding: 3rem 14rem; */
   padding: 2rem 6rem;
   scrollbar-color: #151515 transparent;
@@ -258,10 +259,12 @@ body,
 
   .search-input {
     height: 2rem;
+    padding-left: 3rem;
   }
 
   .search {
     height: 1.3rem;
+    left: 1rem;
   }
 
   .logged-in-burger {

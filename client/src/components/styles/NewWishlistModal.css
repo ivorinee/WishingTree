@@ -14,7 +14,7 @@
 .disabled-pointer {
   pointer-events: auto;
   backdrop-filter: blur(2px);
-  background-color: #1515154D;
+  background-color: #1515154d;
 }
 
 .new-wishlist-modal {
@@ -59,4 +59,16 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+  .new-wishlist-modal {
+    width: 80vw;
+    height: 18rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .new-wishlist-privacy-status-container {
+    width: 60vw;
+  }
 }

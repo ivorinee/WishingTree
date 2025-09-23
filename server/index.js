@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173", // Adjust for your frontend URL
+    origin: process.env.CLIENT_URL, // Adjust for your frontend URL
     credentials: true,
   })
 );
@@ -33,6 +33,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: false, // Set to true if using HTTPS
+      httpOnly: true,
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
@@ -46,6 +48,6 @@ app.use("/users", userRoutes);
 app.use("/wishlists", wishlistRoutes);
 app.use("/item", itemRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running at http://192.168.2.110:${PORT}`);
 });

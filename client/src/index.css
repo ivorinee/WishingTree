@@ -28,8 +28,9 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  /* min-width: 320px; */
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -67,7 +68,8 @@ p {
   color: #151515;
 }
 
-button, select {
+button,
+select {
   border-radius: 8px;
   border: 1px solid transparent;
   font-family: "Fredoka";
@@ -95,5 +97,20 @@ input {
   }
   a:hover {
     color: #747bff;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  p {
+    line-height: 1;
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
   }
 }

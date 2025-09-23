@@ -45,7 +45,7 @@ function WishlistCard({
   const navigate = useNavigate();
   const [isPrivate, setIsPrivate] = useState(privacy);
   const scheme = COLOR_SCHEMES[color];
-  console.log(!owner && !saved)
+  console.log(!owner && !saved);
 
   async function removeSavedWishlist() {
     await unsaveWishlist(id);
@@ -56,84 +56,82 @@ function WishlistCard({
     <div className="wishlist-card-container">
       <div className="wishlist-card-wrapper">
         <div className="wishlist-paperclip">
-          <img src={paperclip} alt="paperclip" />
+          <img className="paperclip-icon" src={paperclip} alt="paperclip" />
         </div>
         <div
           className={`wishlist-binder ${
             side === "right" ? "binder-right" : ""
           }`}
         >
-          <img src={binder} alt="binder" />
+          <img className="binder-icon" src={binder} alt="binder" />
         </div>
-        <div className="wishlist-body">
-          <div
-            className="wishlist-card"
-            style={{ backgroundColor: scheme.backgroundColor }}
-          >
-            <div className="wishlist-card-header">
-              <div className="wishlist-card-title">
-                <div>
-                  <p className="wishlist-card-owner">{owner}</p>
-                  <h3>{title}</h3>
-                </div>
-                {link && <Button style="link-button" image={linkIcon} />}
+        <div
+          className="wishlist-card"
+          style={{ backgroundColor: scheme.backgroundColor }}
+        >
+          <div className="wishlist-card-header">
+            <div className="wishlist-card-title">
+              <div>
+                <p className="wishlist-card-owner">{owner}</p>
+                <h3>{title}</h3>
               </div>
-              {progress >= 0 ? (
-                <div className="progress-bar">
-                  <p>{progress}% Complete</p>
-                  <div className="progress-track">
-                    <div
-                      className="progress-fill"
-                      style={{
-                        width: `${progress}%`,
-                        backgroundColor: scheme.mainColor,
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              ) : (
-                <div className="progress-bar">
-                  <p>Oops! Someone forgot to wish.</p>
-                </div>
-              )}
+              {link && <Button style="link-button" image={linkIcon} />}
             </div>
-            <div className="wishlist-card-footer">
-              {owner && !saved && (
-                <button
-                  className={`privacy-toggle ${isPrivate ? "private" : ""}`}
-                  onClick={() => setIsPrivate(!isPrivate)}
-                >
+            {progress >= 0 ? (
+              <div className="progress-bar">
+                <p>{progress}% Complete</p>
+                <div className="progress-track">
                   <div
-                    className="privacy-thumb"
+                    className="progress-fill"
                     style={{
-                      backgroundColor: isPrivate
-                        ? "#FFFFFF"
-                        : scheme.backgroundColor,
+                      width: `${progress}%`,
+                      backgroundColor: scheme.mainColor,
                     }}
-                  >
-                    <img
-                      src={isPrivate ? lockIcon : unlockIcon}
-                      alt={isPrivate ? "Locked" : "Unlocked"}
-                    />
-                  </div>
-                </button>
-              )}
-              {saved && (
-                <Button
-                  image={binIcon}
-                  style="bin-button"
-                  onClick={removeSavedWishlist}
-                />
-              )}
+                  ></div>
+                </div>
+              </div>
+            ) : (
+              <div className="progress-bar">
+                <p>Oops! Someone forgot to wish.</p>
+              </div>
+            )}
+          </div>
+          <div className="wishlist-card-footer">
+            {owner && !saved && (
               <button
-                className="view-button"
-                style={{ backgroundColor: scheme.mainColor }}
-                onClick={() => navigate(`/wishlist/${id}`)}
+                className={`privacy-toggle ${isPrivate ? "private" : ""}`}
+                onClick={() => setIsPrivate(!isPrivate)}
               >
-                <p>VIEW</p>
-                <img src={arrowIcon} alt="arrow" className="btn-arrow"/>
+                <div
+                  className="privacy-thumb"
+                  style={{
+                    backgroundColor: isPrivate
+                      ? "#FFFFFF"
+                      : scheme.backgroundColor,
+                  }}
+                >
+                  <img
+                    src={isPrivate ? lockIcon : unlockIcon}
+                    alt={isPrivate ? "Locked" : "Unlocked"}
+                  />
+                </div>
               </button>
-            </div>
+            )}
+            {saved && (
+              <Button
+                image={binIcon}
+                style="bin-button"
+                onClick={removeSavedWishlist}
+              />
+            )}
+            <button
+              className="view-button"
+              style={{ backgroundColor: scheme.mainColor }}
+              onClick={() => navigate(`/wishlist/${id}`)}
+            >
+              <p>VIEW</p>
+              <img src={arrowIcon} alt="arrow" className="btn-arrow" />
+            </button>
           </div>
         </div>
       </div>
