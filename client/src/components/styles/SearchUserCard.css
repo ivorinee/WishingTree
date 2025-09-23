@@ -3,13 +3,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  width: 12rem;
-  height: 18rem;
+  width: 100%;
+  height: auto;
   border: 3px solid #151515;
   border-radius: 30px;
   padding: 1rem 2rem;
   gap: 1.2rem;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .search-user-profile {
@@ -49,4 +50,10 @@
 
 .search-user-action {
   width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+  .search-user-card {
+    /* width: 23%; */
+  }
 }

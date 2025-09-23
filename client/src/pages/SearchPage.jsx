@@ -30,6 +30,7 @@ function SearchPage() {
             <SearchUserCard
               key={user.id}
               id={user.id}
+              profileIcon={user.profile_icon}
               name={user.name}
               wishlists={user.wishlistCount}
               friends={user.friends.length}
@@ -40,6 +41,11 @@ function SearchPage() {
             />
           ))}
         </div>
+        {userResults.length == 0 && (
+          <div className="search-empty-results-container">
+            <p>No user found!</p>
+          </div>
+        )}
       </div>
     </ScreenFrame>
   );

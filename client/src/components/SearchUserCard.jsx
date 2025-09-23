@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import { handleSendRequest } from "../api/userApi";
-import profilePic from "../assets/profile-1.svg";
+import { getProfileIcon } from "../utils/profileIcons";
 import "./styles/SearchUserCard.css";
 
 function SearchUserCard({
   name,
   id,
+  profileIcon,
   wishlists,
   friends,
   currentUser,
@@ -39,7 +40,7 @@ function SearchUserCard({
   return (
     <div className="search-user-card" onClick={() => navigate(`/user/${id}`)}>
       <div className="search-user-profile">
-        <img src={profilePic} className="home-page-profile-pic" />
+        <img src={getProfileIcon(profileIcon)} className="home-page-profile-pic" />
         <div className="search-user-profile-details">
           <p className="search-user-profile-name">{name}</p>
           <p className="search-user-profile-id">ID: {id}</p>
