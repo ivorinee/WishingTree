@@ -36,13 +36,25 @@
   display: flex;
   flex-direction: column;
   gap: 0rem;
-  /* max-height: 13rem; */
+  width: 100%;
   min-height: 7rem;
   max-height: 6rem;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-top: 1rem;
   padding-right: 1rem;
   scrollbar-color: #151515 transparent;
   scrollbar-width: thin;
 }
 
+@media screen and (max-width: 1000px) {
+  .friend-request-container {
+    padding: 1.5rem 1rem 0rem 1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .friend-list-container {
+    padding-right: 0.2rem;
+  }
+}

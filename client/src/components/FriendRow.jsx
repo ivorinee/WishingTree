@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Button from "./Button";
 import ConfirmationModal from "./ConfirmationModal";
 import { getProfileIcon } from "../utils/profileIcons";
+import bin from "../assets/small-bin-icon.svg";
 import "./styles/FriendRow.css";
 
 function FriendRow({ friend, type, accept, reject, refreshList }) {
   const navigate = useNavigate();
   const { name, id, profileIcon } = friend;
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const [smallScreen, setSmallScreen] = useState(window.innerWidth <= 700);
+
+  const handleResize = () => {
+    setSmallScreen(window.innerWidth <= 700);
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  });
 
   return (
     <>
@@ -26,9 +38,6 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
         }`}
       >
         <div className="friend-info">
-          {/* <div className="friend-avatar">
-            <img src={profilePic} className="friend-profile-pic" />
-          </div> */}
           <img
             src={getProfileIcon(profileIcon)}
             className="friend-profile-pic"
@@ -62,7 +71,8 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
               />
               <Button
                 style="remove-friend-button"
-                name="REMOVE FRIEND"
+                name={!smallScreen ? "REMOVE FRIEND" : undefined}
+                image={smallScreen ? bin : undefined}
                 onClick={() => setConfirmationModal(true)}
               />
             </>

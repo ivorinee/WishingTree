@@ -9,6 +9,7 @@
   padding: 0.5rem 4rem;
   font-weight: 500;
   gap: 1rem;
+  white-space: nowrap;
 }
 
 .universal-button:hover {
@@ -222,20 +223,36 @@ disabled:hover {
     height: 2rem;
     width: 5rem;
   }
+
+  .view-friend-button {
+    padding: 0.5rem 3rem;
+  }
+
+  .remove-friend-button,
+  .accept-friend-button,
+  .decline-friend-button {
+    padding: 0.5rem 1rem;
+  }
+
+  .accept-friend-button,
+  .decline-friend-button {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .remove-friend-button {
+    padding: 0.5rem 0.6rem;
+  }
 }
 
 @media screen and (max-width: 600px) {
   .universal-button {
-    padding: 0.25rem 1rem;
-    white-space: nowrap;
+    padding: 0.25rem 2rem;
   }
 
   .view-button {
     padding: 0.25rem 1rem;
-  }
-
-  .next-prev-button {
-    width: 3rem;
   }
 
   .link-button {
@@ -260,5 +277,30 @@ disabled:hover {
 
   .create-wishlist-button {
     width: 40vw;
+  }
+
+  .remove-friend-button {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .view-friend-button {
+    padding: 0 5vw;
+  }
+
+  .accept-friend-button,
+  .decline-friend-button {
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .universal-button {
+    line-height: 1.2;
+    font-size: 0.9rem;
+  }
+
+  .view-friend-button {
+    width: 100%;
   }
 }
