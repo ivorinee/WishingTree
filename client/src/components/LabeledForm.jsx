@@ -22,7 +22,7 @@ function LabeledForm({ fields, values, onChange }) {
             </select>
           ) : (
             <input
-              className="input-form"
+              className={"input-form" + (name == "description" ? " input-description" : "")}
               type={type}
               name={name}
               value={values[name] || ""}

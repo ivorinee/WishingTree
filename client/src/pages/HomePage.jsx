@@ -117,6 +117,8 @@ function HomePage() {
     loadReservedGifts();
     loadPersonalWishlists();
     loadSavedWishlists();
+    setPersonalPage(0);
+    setSavedPage(0);
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);

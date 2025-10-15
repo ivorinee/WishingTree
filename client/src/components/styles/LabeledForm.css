@@ -22,6 +22,8 @@
   border-radius: 30px;
   padding: 0rem 1.5rem;
   appearance: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input-form option {
@@ -30,4 +32,8 @@
   border-radius: 30px;
   color: #151515;
   padding: 1rem;
+}
+
+.input-description {
+  height: 7.5rem;
 }

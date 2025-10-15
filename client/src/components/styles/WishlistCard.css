@@ -18,7 +18,7 @@
 .wishlist-binder {
   position: absolute;
   right: -1.4rem;
-  top: 3.4rem;
+  top: 3.8rem;
   z-index: 1;
 }
 
@@ -38,7 +38,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 4rem;
+  height: 12rem;
+}
+
+.saved-wishlist-card {
+  height: 14rem;
 }
 
 .wishlist-card-header {
@@ -50,7 +54,15 @@
 .wishlist-card-title {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 0.2rem;
+}
+
+.wishlist-card-title h3 {
+  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .wishlist-card-owner {
@@ -133,17 +145,17 @@
   }
 
   .wishlist-paperclip {
-    position: absolute;
     top: -1.57rem;
     left: 2.6rem;
-    z-index: 1;
   }
 
   .wishlist-binder {
-    position: absolute;
-    top: 3.5rem;
+    top: 4.6rem;
     right: -2.2rem;
-    z-index: 1;
+  }
+
+  .saved-wishlist-binder {
+    top: 5.6rem;
   }
 
   .binder-right {
@@ -158,7 +170,6 @@
   .wishlist-card {
     min-width: 1rem;
     padding: 1rem 1.3rem;
-    gap: 3rem;
   }
 
   .progress-bar {
@@ -166,6 +177,7 @@
     align-items: flex-start;
     gap: 0.2rem;
     height: 2rem;
+    white-space: normal;
   }
 
   .progress-track {
@@ -201,5 +213,23 @@
 
   .privacy-toggle.private .privacy-thumb {
     left: 2rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wishlist-card {
+    height: 14rem;
+  }
+
+  .saved-wishlist-card {
+    height: 16rem;
+  }
+
+  .wishlist-binder {
+    top: 5.5rem;
+  }
+
+  .saved-wishlist-binder {
+    top: 6.8rem;
   }
 }

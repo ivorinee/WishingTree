@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./Button";
 import ConfirmationModal from "./ConfirmationModal";
 import { setReceived, setReserve } from "../api/itemApi";
@@ -31,6 +31,9 @@ function WishlistItem({
   const [hasReceived, setHasReceived] = useState(received);
   const [reservedBy, setReservedBy] = useState(reserved);
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const [smallScreen, setSmallScreen] = useState(
+    window.innerWidth <= 600 ? false : true
+  );
   const priorityColors = {
     HIGH: "#E76F6F",
     MEDIUM: "#FFBC40",
@@ -39,6 +42,10 @@ function WishlistItem({
   const effectivePriorityColor = hasReceived
     ? "#1515154D"
     : priorityColors[priority];
+
+  function handleResize() {
+    setSmallScreen(window.innerWidth <= 600 ? true : false);
+  }
 
   async function markAsReceived() {
     setHasReceived(true);
@@ -59,6 +66,13 @@ function WishlistItem({
     setReservedBy(null);
     setReserve("unreserve", id);
   }
+
+  useEffect(() => {
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  });
 
   return (
     <>
@@ -90,11 +104,19 @@ function WishlistItem({
             <div className="wishlist-item-content">
               <div className="wishlist-item-name-tag">
                 <p className="wishlist-item-name">{name}</p>
-                <div
-                  className="wishlist-item-priority "
-                  style={{ backgroundColor: effectivePriorityColor }}
-                >
-                  <p>{priority}</p>
+                <div className="wishlist-item-tag-price">
+                  <div
+                    className="wishlist-item-priority "
+                    style={{ backgroundColor: effectivePriorityColor }}
+                  >
+                    <p>{priority}</p>
+                  </div>
+                  {smallScreen && (
+                    <div className="wishlist-item-price">
+                      <img src={priceIcon} alt="Price" />
+                      <p>{price}</p>
+                    </div>
+                  )}
                 </div>
               </div>
               <p className="wishlist-item-description">{description}</p>
@@ -105,10 +127,12 @@ function WishlistItem({
               <p className="wishlist-item-modified">
                 Last Modified: {lastModified}
               </p>
-              <div className="wishlist-item-price">
-                <img src={priceIcon} alt="Price" />
-                <p>{price}</p>
-              </div>
+              {!smallScreen && (
+                <div className="wishlist-item-price">
+                  <img src={priceIcon} alt="Price" />
+                  <p>{price}</p>
+                </div>
+              )}
             </div>
             <div className="wishlist-item-buttons">
               {link && <Button image={linkIcon} style="link-button" />}

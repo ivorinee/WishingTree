@@ -59,14 +59,14 @@ function WishlistCard({
           <img className="paperclip-icon" src={paperclip} alt="paperclip" />
         </div>
         <div
-          className={`wishlist-binder ${
+          className={`wishlist-binder ${saved ? "saved-wishlist-binder" : ""} ${
             side === "right" ? "binder-right" : ""
           }`}
         >
           <img className="binder-icon" src={binder} alt="binder" />
         </div>
         <div
-          className="wishlist-card"
+          className={`wishlist-card ${saved ? "saved-wishlist-card" : ""}`}
           style={{ backgroundColor: scheme.backgroundColor }}
         >
           <div className="wishlist-card-header">

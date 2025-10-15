@@ -38,11 +38,11 @@ function AddEditItem({
     if (!name) {
       return "Please enter the name of the item you want on your wishlist.";
     }
-    if (name.length > 100) {
-      return "Item name cannot exceed 100 characters.";
+    if (name.length > 50) {
+      return "Item name cannot exceed 50 characters.";
     }
-    if (description.length > 200) {
-      return "Item description cannot exceed 200 characters.";
+    if (description.length > 100) {
+      return "Item description cannot exceed 100 characters.";
     }
     if (!priority) {
       return "Select a priority to show how much you want this item.";
@@ -104,44 +104,44 @@ function AddEditItem({
   return (
     <div className="add-edit-item-container">
       <div className="add-edit-item-form">
-        <div className="form-columns">
-          <div className="form-column">
-            <LabeledForm
-              fields={fields.slice(0, 2)}
-              values={formValues}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-column right-form">
-            <div className="right-top-row">
+        <div className="form-contents">
+          <div className="form-columns">
+            <div className="form-column">
               <LabeledForm
-                fields={fields.slice(2, 3)}
-                values={formValues}
-                onChange={handleChange}
-              />
-              <LabeledForm
-                fields={fields.slice(3, 4)}
+                fields={fields.slice(0, 2)}
                 values={formValues}
                 onChange={handleChange}
               />
             </div>
-            <div className="right-bottom-row">
-              <LabeledForm
-                fields={fields.slice(4, 5)}
-                values={formValues}
-                onChange={handleChange}
-              />
+            <div className="form-column right-form">
+              <div className="right-row">
+                <LabeledForm
+                  fields={fields.slice(2, 3)}
+                  values={formValues}
+                  onChange={handleChange}
+                />
+                <LabeledForm
+                  fields={fields.slice(3, 4)}
+                  values={formValues}
+                  onChange={handleChange}
+                />
+                <LabeledForm
+                  fields={fields.slice(4, 5)}
+                  values={formValues}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="error-placeholder-container">
           <p className="error-placeholder">{error}</p>
         </div>
-        <Button
-          name={type === "add" ? "Add Item" : "Save Changes"}
-          style="submit-button"
-          onClick={handleSubmit}
-        />
+        <div className="submit-button-container">
+          <Button
+            name={type === "add" ? "Add Item" : "Save Changes"}
+            style="submit-button"
+            onClick={handleSubmit}
+          />
+        </div>
       </div>
     </div>
   );

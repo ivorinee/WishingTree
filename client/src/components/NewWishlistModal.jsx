@@ -33,8 +33,8 @@ function NewWishlistModal({ onClick, refreshWishlists }) {
       return "Please enter the name for your new wishlist.";
     }
 
-    if (formValues.wishlistName.length > 100) {
-      return "Wishlist name cannot exceed 100 characters.";
+    if (formValues.wishlistName.length > 50) {
+      return "Wishlist name cannot exceed 50 characters.";
     }
 
     return null;

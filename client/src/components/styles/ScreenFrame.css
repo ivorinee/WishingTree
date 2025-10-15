@@ -166,6 +166,16 @@ body,
   width: 3rem;
 }
 
+@media screen and (min-width: 1600px) {
+  .fixed-top-box {
+    padding: 0.5rem 10rem;
+  }
+
+  .scrollable-content {
+    padding: 2rem 10rem;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .fixed-top-box {
     padding: 0.5rem 2rem;
