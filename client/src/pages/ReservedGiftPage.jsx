@@ -60,6 +60,11 @@ function ReservedGiftPage() {
               unreserve={unreserveGift}
             />
           ))}
+          {reservedGifts.length === 0 && (
+            <p className="reserved-empty-placeholder">
+              You haven't reserved any gifts yet.
+            </p>
+          )}
         </div>
       </div>
     </ScreenFrame>

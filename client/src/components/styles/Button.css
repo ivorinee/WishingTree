@@ -172,16 +172,6 @@ disabled:hover {
   box-shadow: none;
 }
 
-.view-wishlist-button {
-  padding: 0.5rem 1rem 0.5rem 3rem;
-  border: none;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
 .view-wishlist-button:hover {
   box-shadow: none;
   gap: 3rem;
@@ -318,4 +308,14 @@ disabled:hover {
   border: 0px;
   padding: 0rem;
   background-color: transparent;
+}
+
+.view-wishlist-button {
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }

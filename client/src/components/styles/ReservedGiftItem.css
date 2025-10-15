@@ -32,6 +32,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 2rem;
+  gap: 1rem;
   box-sizing: border-box;
   background-color: #fff4be;
   border-radius: 0 0 30px 30px;
@@ -45,6 +46,7 @@
 .reserved-gift-name-price {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   gap: 1rem;
 }
 
@@ -73,6 +75,15 @@
   gap: 1rem;
 }
 
-@media screen and (max-width: 1000px) {
-  
+@media screen and (max-width: 800px) {
+  .reserved-gift-bottom-container {
+    flex-direction: column;
+  }
+  .reserved-gift-top-container {
+    padding: 0rem 1rem;
+  }
+
+  .reserved-gift-bottom-container {
+    padding: 0.6rem 1rem;
+  }
 }
