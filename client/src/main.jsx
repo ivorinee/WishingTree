@@ -6,7 +6,7 @@ import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter basename="/WishingTree">
+    <BrowserRouter basename="/wishing-tree">
       <App />
     </BrowserRouter>
   </StrictMode>
