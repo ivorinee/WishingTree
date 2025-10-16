@@ -48,6 +48,6 @@ app.use("/users", userRoutes);
 app.use("/wishlists", wishlistRoutes);
 app.use("/item", itemRoutes);
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running at http://192.168.2.110:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
