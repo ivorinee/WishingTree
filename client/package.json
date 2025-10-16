@@ -1,7 +1,7 @@
 {
   "name": "client",
   "private": true,
-  "homepage": "https://ivorinee.github.io/WishingTree",
+  "homepage": "https://ivorinee.github.io/wishing-tree",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
