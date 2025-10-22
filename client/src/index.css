@@ -121,3 +121,9 @@ input {
     font-size: 0.9rem;
   }
 }
+
+img, svg {
+  image-rendering: -webkit-optimize-contrast;
+  shape-rendering: geometricPrecision;
+  transform: translateZ(0); /* forces subpixel rounding off */
+}

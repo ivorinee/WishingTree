@@ -20,10 +20,6 @@
   gap: 1.5rem;
 }
 
-.friend-profile-pic {
-  width: 4rem;
-}
-
 .friend-details {
   display: flex;
   flex-direction: column;
@@ -59,10 +55,6 @@
 @media screen and (max-width: 600px) {
   .friend-info {
     gap: 0.5rem;
-  }
-
-  .friend-profile-pic {
-    width: 3rem;
   }
 
   .friend-actions {

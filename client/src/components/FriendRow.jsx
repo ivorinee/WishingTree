@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Button from "./Button";
 import ConfirmationModal from "./ConfirmationModal";
-import { getProfileIcon } from "../utils/profileIcons";
+import ProfileImage from "./ProfileImage";
 import bin from "../assets/small-bin-icon.svg";
 import "./styles/FriendRow.css";
 
@@ -38,10 +38,7 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
         }`}
       >
         <div className="friend-info">
-          <img
-            src={getProfileIcon(profileIcon)}
-            className="friend-profile-pic"
-          />
+          <ProfileImage index={profileIcon} />
           <div className="friend-details">
             <p className="friend-item-name">{name}</p>
             <p className="friend-item-id">ID: {id}</p>

@@ -32,10 +32,7 @@
   flex-direction: row;
   justify-content: center;
   gap: 2rem;
-}
-
-.landing-page-navigation-button {
-  width: 4rem;
+  width: 100%;
 }
 
 .hero-section {

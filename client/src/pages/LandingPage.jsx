@@ -5,6 +5,7 @@ import loginBtn from "../assets/login-button.svg";
 import unwrapGiftBtn from "../assets/unwrap-gift-button.svg";
 import logo from "../assets/logo.svg";
 import "./styles/LandingPage.css";
+import LandingPageButton from "../components/LandingPageButton";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -18,30 +19,9 @@ function LandingPage() {
         <div className="landing-page-content">
           <img className="logo" src={logo} />
           <div className="landing-page-navigation-container">
-            <button onClick={() => navigate("/login")}>
-              <img
-                className="landing-page-navigation-button"
-                src={loginBtn}
-                alt="Login Button"
-              />
-              <p>Login</p>
-            </button>
-            <button onClick={() => navigate("/signup")}>
-              <img
-                className="landing-page-navigation-button"
-                src={signupBtn}
-                alt="Sign Up Button"
-              />
-              <p>Sign Up</p>
-            </button>
-            <button onClick={() => navigate("/unwrap-gift")}>
-              <img
-                className="landing-page-navigation-button"
-                src={unwrapGiftBtn}
-                alt="Unwrap Gift Button"
-              />
-              <p>Unwrap Gift</p>
-            </button>
+            <LandingPageButton type="login" onClick={() => navigate("/login")} />
+            <LandingPageButton type="signup" onClick={() => navigate("/signup")} />
+            <LandingPageButton type="unwrapGift" onClick={() => navigate("/unwrap-gift")} />
           </div>
           <div className="hero-section">
             <div className="landing-page-text-container">

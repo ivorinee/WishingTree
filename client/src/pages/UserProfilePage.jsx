@@ -4,6 +4,7 @@ import ScreenFrame from "../components/ScreenFrame";
 import Button from "../components/Button";
 import WishlistCard from "../components/WishlistCard";
 import ConfirmationModal from "../components/ConfirmationModal";
+import ProfileImage from "../components/ProfileImage";
 import { fetchCurrentUser, fetchUserDetails } from "../api/userApi";
 import {
   handleSendRequest,
@@ -14,7 +15,6 @@ import {
   fetchUserWishlists,
   fetchPercentageComplete,
 } from "../api/wishlistApi";
-import { getProfileIcon } from "../utils/profileIcons";
 import sortIcon from "../assets/sort-icon.svg";
 import rightIcon from "../assets/right-icon.svg";
 import leftIcon from "../assets/left-icon.svg";
@@ -104,10 +104,7 @@ function UserProfilePage() {
       <div className="user-page-main-container">
         <div className="user-page-profile-container">
           <div className="user-page-profile">
-            <img
-              src={getProfileIcon(profileIcon)}
-              className="user-page-profile-pic"
-            />
+            <ProfileImage index={profileIcon} />
             <div className="user-page-profile-text">
               <h1>{name}</h1>
               <p className="user-page-id">ID: {id}</p>
