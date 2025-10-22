@@ -10,7 +10,7 @@ import {
   getSavedWishlistsByUser,
   updateWishlistName,
 } from "../models/wishlistModel.js";
-
+import { getFriends } from "../models/userModel.js";
 import { getItems, getUnreceivedItems } from "../models/itemModel.js";
 
 export async function createWishlist(req, res) {
@@ -73,15 +73,18 @@ export async function getWishlistDetails(req, res) {
   const userId = req.user.id;
   try {
     const wishlistDetails = await getWishlistsById(id);
+    const isFriend = await getFriends(userId).then((friends) =>
+      friends.friends.includes(wishlistDetails.owner)
+    );
     if (
       wishlistDetails.owner === userId ||
-      wishlistDetails.privacy_status == false || 
-      wishlistDetails.saved_by.includes(userId)
+      wishlistDetails.privacy_status == false ||
+      wishlistDetails.saved_by.includes(userId) ||
+      isFriend
     ) {
       return res.status(200).json({
         message: "Wishlist Details retrieved",
         wishlistDetails,
-        owner: true,
       });
     }
     return res.status(403).json({ message: "No permission to view wishlist" });

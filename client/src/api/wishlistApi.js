@@ -27,6 +27,7 @@ export async function fetchWishlist(id) {
     return wishlistResponse.data.wishlistDetails;
   } catch (error) {
     console.error("Error fetching wishlist:", error.response?.data || error);
+    throw error;
   }
 }
 
