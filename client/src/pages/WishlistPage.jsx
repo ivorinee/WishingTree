@@ -84,10 +84,14 @@ function WishlistPage() {
     try {
       const wishlistData = await fetchWishlist(id);
       const wishlistItems = await fetchWishlistItems(id);
-      const userData = await fetchCurrentUser();
       setWishlist(wishlistData);
       setWishlistItems(wishlistItems);
-      setCurrentUser(userData);
+      try {
+        const userData = await fetchCurrentUser();
+        setCurrentUser(userData);
+      } catch {
+        setCurrentUser(null);
+      }
     } catch (error) {
       setAuthorized(false);
     }
@@ -142,6 +146,8 @@ function WishlistPage() {
 
     if (wishlist.owner && currentUser?.id) {
       checkOwnership();
+    } else {
+      setOwnership(ownershipColour.nonOwnership);
     }
   }, [wishlist, currentUser]);
 
@@ -176,7 +182,9 @@ function WishlistPage() {
                     <Button
                       style="wishlist-button-navbar"
                       image={closeButton}
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        currentUser ? navigate(-1) : navigate("/");
+                      }}
                     />
                   </div>
                   <div className="wishlist-navbar-right">
@@ -184,21 +192,27 @@ function WishlistPage() {
                       <Button
                         style="wishlist-button-navbar"
                         image={minimizeButton}
-                        onClick={() => navigate(-1)}
+                        onClick={() => {
+                          currentUser ? navigate(-1) : navigate("/");
+                        }}
                       />
                     )}
                     {smallScreen && (
                       <Button
                         style="wishlist-button-navbar"
                         image={maximizeButton}
-                        onClick={() => navigate(-1)}
+                        onClick={() => {
+                          currentUser ? navigate(-1) : navigate("/");
+                        }}
                       />
                     )}
 
                     <Button
                       style="wishlist-button-navbar"
                       image={bigCloseButton}
-                      onClick={() => navigate(-1)}
+                      onClick={() => {
+                        currentUser ? navigate(-1) : navigate("/");
+                      }}
                     />
                   </div>
                 </div>

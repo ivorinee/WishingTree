@@ -43,9 +43,10 @@ export async function generateUnique6DigitCode() {
 
   while (!unique) {
     code = Math.floor(100000 + Math.random() * 900000);
-    const result = await pool.query("SELECT * FROM wishlist_items WHERE id = $1", [
-      code,
-    ]);
+    const result = await pool.query(
+      "SELECT * FROM wishlist_items WHERE id = $1",
+      [code]
+    );
     if (result.rowCount === 0) {
       unique = true;
     }
@@ -54,6 +55,18 @@ export async function generateUnique6DigitCode() {
   return code;
 }
 
-export async function generateProfileIcon() {
+export function generateAuthorizationCode(length = 20) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const array = new Uint8Array(length);
+  crypto.getRandomValues(array);
+  return Array.from(array, (n) => characters[n % characters.length]).join("");
+}
+
+export function generateWishlistURL(wishlistId, authorizationCode) {
+  return `https://ivorinee.github.io/wishing-tree/wishlist/${wishlistId}?auth=${authorizationCode}`;
+}
+
+export function generateProfileIcon() {
   return Math.floor(1 + Math.random() * 8);
 }

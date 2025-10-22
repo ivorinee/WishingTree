@@ -62,6 +62,7 @@ export async function setItemAsReceived(req, res) {
   const { itemId } = req.body;
   try {
     await setReceived(itemId, true);
+    await setReserved(itemId, null);
     return res.status(200).json({ message: "Item received" });
   } catch (err) {
     console.error("Item error:", err);

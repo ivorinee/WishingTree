@@ -1,15 +1,20 @@
 import { pool } from "../config/db.js";
-import { generateUnique5DigitCode } from "./idModel.js";
+import {
+  generateUnique5DigitCode,
+  generateAuthorizationCode,
+  generateWishlistURL,
+} from "./idModel.js";
 
 export async function insertWishlist(nameId, wishlistName, privacyStatus) {
   const id = await generateUnique5DigitCode();
-  const baseUrl = process.env.CLIENT_BASE_URL || "http://localhost:5173";
-  const link = `${baseUrl}/wishlist-${id}`;
+  const authCode = generateAuthorizationCode();
+  const link = generateWishlistURL(id, authCode);
+  console.log("Generated wishlist link:", link);
 
   const result = await pool.query(
-    `INSERT INTO wishlists (id, owner, name, privacy_status, share_link) 
-    VALUES ($1, $2, $3, $4, $5)`,
-    [id, nameId, wishlistName, privacyStatus, link]
+    `INSERT INTO wishlists (id, owner, name, privacy_status, share_link, authorization_code) 
+    VALUES ($1, $2, $3, $4, $5, $6)`,
+    [id, nameId, wishlistName, privacyStatus, link, authCode]
   );
 
   return result.rows[0];
@@ -31,9 +36,10 @@ export async function getWishlistsByOwner(ownerId) {
 }
 
 export async function getPublicWishlistsByOwner(ownerId) {
-  const result = await pool.query("SELECT * FROM wishlists WHERE owner = $1 AND privacy_status = 'false'", [
-    ownerId,
-  ]);
+  const result = await pool.query(
+    "SELECT * FROM wishlists WHERE owner = $1 AND privacy_status = 'false'",
+    [ownerId]
+  );
   return result.rows;
 }
 

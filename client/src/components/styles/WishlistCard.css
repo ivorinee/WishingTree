@@ -139,6 +139,14 @@
   left: 3.3rem;
 }
 
+.privacy-toggle:hover .privacy-thumb {
+  box-shadow: 0 0 0 0.5px #151515;
+}
+
+.privacy-toggle:hover .privacy-thumb img {
+  width: 70%;
+}
+
 @media screen and (max-width: 600px) {
   .paperclip-icon {
     width: 80%;

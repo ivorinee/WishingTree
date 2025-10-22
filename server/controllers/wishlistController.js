@@ -46,10 +46,14 @@ export async function getUserWishlists(req, res) {
   try {
     if (friend) {
       const wishlists = await getWishlistsByOwner(id);
-      return res.status(200).json({ message: "Wishlists retrieved", wishlists });
+      return res
+        .status(200)
+        .json({ message: "Wishlists retrieved", wishlists });
     } else {
       const wishlists = await getPublicWishlistsByOwner(id);
-      return res.status(200).json({ message: "Wishlists retrieved", wishlists });
+      return res
+        .status(200)
+        .json({ message: "Wishlists retrieved", wishlists });
     }
   } catch (err) {
     console.error("Wishlist error:", err);
@@ -70,17 +74,21 @@ export async function getOwnWishlists(req, res) {
 
 export async function getWishlistDetails(req, res) {
   const { id } = req.params;
-  const userId = req.user.id;
+  const userId = req.user?.id;
+  const authCode = req.query.auth;
   try {
     const wishlistDetails = await getWishlistsById(id);
-    const isFriend = await getFriends(userId).then((friends) =>
-      friends.friends.includes(wishlistDetails.owner)
-    );
+    const isFriend = userId
+      ? await getFriends(userId).then((friends) =>
+          friends.friends.includes(wishlistDetails.owner)
+        )
+      : false;
     if (
       wishlistDetails.owner === userId ||
       wishlistDetails.privacy_status == false ||
       wishlistDetails.saved_by.includes(userId) ||
-      isFriend
+      isFriend ||
+      (authCode && wishlistDetails.authorization_code === authCode)
     ) {
       return res.status(200).json({
         message: "Wishlist Details retrieved",

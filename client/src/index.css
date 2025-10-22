@@ -90,6 +90,10 @@ input {
   font-size: 1rem;
 }
 
+button:hover p {
+font-weight: 500;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

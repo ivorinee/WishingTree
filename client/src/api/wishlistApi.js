@@ -18,12 +18,17 @@ export async function fetchMyWishlists() {
 
 export async function fetchWishlist(id) {
   try {
-    const wishlistResponse = await axios.get(
-      `${API_BASE_URL}/wishlists/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
+    const params = new URLSearchParams(window.location.search);
+    const authCode = params.get("auth");
+
+    let url = `${API_BASE_URL}/wishlists/${id}`;
+    if (authCode) {
+      url += `?auth=${authCode}`;
+    }
+
+    const config = authCode ? {} : { withCredentials: true };
+
+    const wishlistResponse = await axios.get(url, config);
     return wishlistResponse.data.wishlistDetails;
   } catch (error) {
     console.error("Error fetching wishlist:", error.response?.data || error);
