@@ -29,25 +29,42 @@ export async function removeWishlist(wishlistId) {
 }
 
 export async function getWishlistsByOwner(ownerId) {
-  const result = await pool.query("SELECT * FROM wishlists WHERE owner = $1", [
-    ownerId,
-  ]);
+  const result = await pool.query(
+    `SELECT id, owner, name, privacy_status, share_link, saved_by 
+    FROM wishlists 
+    WHERE owner = $1`,
+    [ownerId]
+  );
   return result.rows;
 }
 
 export async function getPublicWishlistsByOwner(ownerId) {
   const result = await pool.query(
-    "SELECT * FROM wishlists WHERE owner = $1 AND privacy_status = 'false'",
+    `SELECT id, owner, name, privacy_status, share_link, saved_by 
+    FROM wishlists 
+    WHERE owner = $1 
+    AND privacy_status = 'false'`,
     [ownerId]
   );
   return result.rows;
 }
 
 export async function getWishlistsById(id) {
-  const result = await pool.query("SELECT * FROM wishlists WHERE id = $1", [
-    id,
-  ]);
+  const result = await pool.query(
+    `SELECT id, owner, name, privacy_status, share_link, saved_by 
+    FROM wishlists 
+    WHERE id = $1`,
+    [id]
+  );
   return result.rows[0];
+}
+
+export async function getAuthCode(id) {
+  const result = await pool.query(
+    "SELECT authorization_code FROM wishlists WHERE id = $1",
+    [id]
+  );
+  return result.rows[0].authorization_code;
 }
 
 export async function updatePrivacyStatus(id, status) {
@@ -59,9 +76,12 @@ export async function updatePrivacyStatus(id, status) {
 }
 
 export async function getWishlistsByUser(id) {
-  const result = await pool.query("SELECT * FROM wishlists WHERE owner = $1", [
-    id,
-  ]);
+  const result = await pool.query(
+    `SELECT id, owner, name, privacy_status, share_link, saved_by 
+    FROM wishlists 
+    WHERE owner = $1`,
+    [id]
+  );
   return result.rows;
 }
 
@@ -88,7 +108,9 @@ export async function removeFromSavedWishlist(nameId, wishlistId) {
 
 export async function getSavedWishlistsByUser(id) {
   const result = await pool.query(
-    "SELECT * FROM wishlists WHERE saved_by @> ARRAY[$1::smallint]",
+    `SELECT id, owner, name, privacy_status, share_link, saved_by 
+    FROM wishlists 
+    WHERE saved_by @> ARRAY[$1::smallint]`,
     [id]
   );
   return result.rows;
