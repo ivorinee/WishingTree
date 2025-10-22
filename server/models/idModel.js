@@ -64,7 +64,7 @@ export function generateAuthorizationCode(length = 20) {
 }
 
 export function generateWishlistURL(wishlistId, authorizationCode) {
-  return `https://ivorinee.github.io/wishing-tree/wishlist/${wishlistId}?auth=${authorizationCode}`;
+  return `https://ivorinee.github.io/wishing-tree/#/wishlist/${wishlistId}?auth=${authorizationCode}`;
 }
 
 export function generateProfileIcon() {
