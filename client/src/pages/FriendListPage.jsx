@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import ScreenFrame from "../components/ScreenFrame";
+import LoadingScreen from "../components/LoadingScreen";
 import FriendRow from "../components/FriendRow";
 import {
   fetchCurrentUser,
@@ -13,6 +14,7 @@ import "./styles/FriendListPage.css";
 function FriendListPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [friends, setFriends] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
@@ -44,11 +46,16 @@ function FriendListPage() {
       userData.friends.map((id) => fetchUserDetails(id))
     );
     setFriends(friendDetails);
+    setLoading(false);
   }
 
   useEffect(() => {
     loadData();
   }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <ScreenFrame>

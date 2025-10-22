@@ -3,7 +3,7 @@ import signUpIcon from "../assets/sign-up-icon.svg";
 import unwrapGiftIcon from "../assets/unwrap-gift-icon.svg";
 import "./styles/LandingPageButton.css";
 
-function LandingPageButton({ type, icon, onClick }) {
+function LandingPageButton({ type, onClick }) {
   const typeTable = {
     signup: { label: "Sign Up", color: "#FFF4BE", icon: signUpIcon },
     login: { label: "Login", color: "#D2C8FF", icon: loginIcon },

@@ -92,7 +92,7 @@ function WishlistCard({
               </div>
             ) : (
               <div className="progress-bar">
-                <p>Oops! Someone forgot to wish.</p>
+                <p>{saved ? "Oops! Someone forgot to wish." : "You have yet to wish for anything."}</p>
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import ScreenFrame from "../components/ScreenFrame";
+import LoadingScreen from "../components/LoadingScreen";
 import Button from "../components/Button";
 import WishlistCard from "../components/WishlistCard";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -23,6 +24,7 @@ import "./styles/UserProfilePage.css";
 function UserProfilePage() {
   const id = useParams().id;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [profileIcon, setProfileIcon] = useState(0);
   const [friend, setFriend] = useState(false);
@@ -83,6 +85,8 @@ function UserProfilePage() {
       percentageMap[id] = percentage;
     });
     setPercentage(percentageMap);
+
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -98,6 +102,10 @@ function UserProfilePage() {
     setRightBtn(page < totalPages - 1);
     setDisplayedWishlist(viewedWishlists);
   }, [userWishlists, page]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <ScreenFrame>

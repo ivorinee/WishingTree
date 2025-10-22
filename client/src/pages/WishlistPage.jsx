@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import Button from "../components/Button";
 import ScreenFrame from "../components/ScreenFrame";
+import LoadingScreen from "../components/LoadingScreen";
 import AddEditItem from "../components/AddEditItem";
 import WishlistItem from "../components/WishlistItem";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -32,6 +33,7 @@ import "./styles/WishListPage.css";
 function WishlistPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(true);
   const Pages = {
     WISHLIST: "wishlist",
@@ -80,20 +82,48 @@ function WishlistPage() {
     setIsPrivate(privacyStatus);
   }
 
+  async function getWishlistOwner() {
+    const userData = await fetchUserDetails(wishlist.owner);
+    setName(userData.name);
+  }
+
   async function loadData() {
     try {
       const wishlistData = await fetchWishlist(id);
       const wishlistItems = await fetchWishlistItems(id);
+
+      let currentUser = null;
+      try {
+        currentUser = await fetchCurrentUser();
+      } catch {
+        currentUser = null;
+      }
+
       setWishlist(wishlistData);
       setWishlistItems(wishlistItems);
-      try {
-        const userData = await fetchCurrentUser();
-        setCurrentUser(userData);
-      } catch {
-        setCurrentUser(null);
+      setCurrentUser(currentUser);
+
+      if (currentUser) {
+        if (wishlistData.owner === currentUser.id) {
+          setOwnership(ownershipColour.ownership);
+          setName(currentUser.name);
+        } else {
+          setOwnership(ownershipColour.nonOwnership);
+          await getWishlistOwner();
+          setSavedWishlist(wishlist.saved_by.includes(currentUser.id));
+        }
+      } else {
+        setOwnership(ownershipColour.nonOwnership);
       }
+
+      setIsPrivate(wishlist.privacy_status);
+      setSavedWishlist(
+        currentUser && wishlistData.saved_by.includes(currentUser.id)
+      );
     } catch (error) {
       setAuthorized(false);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -104,22 +134,6 @@ function WishlistPage() {
     }
     setError("");
     await renameWishlist(id, name);
-  }
-
-  async function getWishlistOwner() {
-    const userData = await fetchUserDetails(wishlist.owner);
-    setName(userData.name);
-  }
-
-  async function checkOwnership() {
-    if (wishlist.owner === currentUser.id) {
-      setOwnership(ownershipColour.ownership);
-      setName(currentUser.name);
-    } else {
-      setOwnership(ownershipColour.nonOwnership);
-      await getWishlistOwner();
-      setSavedWishlist(wishlist.saved_by.includes(currentUser.id));
-    }
   }
 
   async function handleSaveWishlist(bool) {
@@ -139,17 +153,19 @@ function WishlistPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (wishlist?.privacy_status !== undefined) {
-      setIsPrivate(wishlist.privacy_status);
-    }
+  // useEffect(() => {
+  //   if (wishlist.owner && currentUser?.id) {
+  //     checkOwnership();
+  //   } else {
+  //     setOwnership(ownershipColour.nonOwnership);
+  //   }
+  // }, [wishlist, currentUser]);
 
-    if (wishlist.owner && currentUser?.id) {
-      checkOwnership();
-    } else {
-      setOwnership(ownershipColour.nonOwnership);
-    }
-  }, [wishlist, currentUser]);
+  if (loading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <>

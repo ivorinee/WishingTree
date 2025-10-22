@@ -38,7 +38,12 @@ function SearchUserCard({
   }
 
   return (
-    <div className="search-user-card" onClick={() => navigate(`/user/${id}`)}>
+    <div
+      className="search-user-card"
+      onClick={() => {
+        !isOwner && navigate(`/user/${id}`);
+      }}
+    >
       <div className="search-user-profile">
         <ProfileImage index={profileIcon} />
         <div className="search-user-profile-details">

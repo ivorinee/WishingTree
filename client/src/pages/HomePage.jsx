@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import ScreenFrame from "../components/ScreenFrame";
+import LoadingScreen from "../components/LoadingScreen";
 import WishlistCard from "../components/WishlistCard";
 import NewWishlistModal from "../components/NewWishlistModal";
 import ProfileImage from "../components/ProfileImage";
@@ -19,6 +20,7 @@ import "./styles/HomePage.css";
 
 function HomePage() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
   const [profileIcon, setProfileIcon] = useState(0);
   const [newWishlistModal, setNewWishlistModal] = useState(false);
@@ -110,6 +112,7 @@ function HomePage() {
       percentageMap[id] = percentage;
     });
     setSavedPercentage(percentageMap);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -143,6 +146,12 @@ function HomePage() {
     setSavedRightBtn(savedPage < totalSavedPages - 1);
     setDisplayedSavedWishlist(viewedWishlists);
   }, [savedWishlists, savedPage, itemsPerPage, totalSavedPages]);
+
+  if (loading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <>
@@ -356,7 +365,6 @@ function HomePage() {
               </div>
             )}
           </div>
-          {/* <div/> */}
         </div>
       </ScreenFrame>
     </>

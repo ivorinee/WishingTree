@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ScreenFrame from "../components/ScreenFrame";
+import LoadingScreen from "../components/LoadingScreen";
 import SearchUserCard from "../components/SearchUserCard";
 import { fetchCurrentUser, searchUsers } from "../api/userApi";
 import "./styles/SearchPage.css";
 
 function SearchPage() {
   const { query } = useParams();
+  const [loading, setLoading] = useState(true);
   const [userResults, setUserResults] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -15,11 +17,16 @@ function SearchPage() {
     const searchResults = await searchUsers(query);
     setCurrentUser(userData);
     setUserResults(searchResults);
+    setLoading(false);
   }
 
   useEffect(() => {
     loadData();
   }, [query]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <ScreenFrame>
