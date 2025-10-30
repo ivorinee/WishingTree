@@ -76,22 +76,17 @@ select {
   font-size: 1rem;
   background-color: #ffffff;
   cursor: pointer;
+  appearance: none;
 }
 
-select::after {
-  content: "▼";
-  position: absolute;
-  right: 0.5rem;
-  pointer-events: none;
-}
-
-input {
+textarea, input {
   font-family: "Fredoka";
   font-size: 1rem;
+  resize: none;
 }
 
 button:hover p {
-font-weight: 500;
+  font-weight: 500;
 }
 
 @media (prefers-color-scheme: light) {
@@ -120,13 +115,14 @@ font-weight: 500;
     font-size: 1.5rem;
   }
 
-  input {
+  textarea, input {
     line-height: 1.2;
     font-size: 0.9rem;
   }
 }
 
-img, svg {
+img,
+svg {
   image-rendering: -webkit-optimize-contrast;
   shape-rendering: geometricPrecision;
   transform: translateZ(0); /* forces subpixel rounding off */

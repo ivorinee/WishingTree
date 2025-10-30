@@ -18,6 +18,7 @@ function WishlistItem({
   priority,
   lastModified,
   price,
+  currency,
   link,
   received,
   reserved,
@@ -114,7 +115,12 @@ function WishlistItem({
                   {smallScreen && (
                     <div className="wishlist-item-price">
                       <img src={priceIcon} alt="Price" />
-                      <p>{price}</p>
+                      <p>
+                        {new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: currency,
+                        }).format(price)}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -130,12 +136,23 @@ function WishlistItem({
               {!smallScreen && (
                 <div className="wishlist-item-price">
                   <img src={priceIcon} alt="Price" />
-                  <p>{price}</p>
+                  <p>
+                    {new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: currency,
+                    }).format(price)}
+                  </p>
                 </div>
               )}
             </div>
             <div className="wishlist-item-buttons">
-              {link && <Button image={linkIcon} style="link-button" />}
+              {link && (
+                <Button
+                  image={linkIcon}
+                  style="link-button"
+                  onClick={() => window.open(link, "_blank")}
+                />
+              )}
               {owner &&
                 (hasReceived ? (
                   <Button
@@ -196,7 +213,15 @@ function WishlistItem({
                 image={editIcon}
                 style="edit-item-button "
                 onClick={() => {
-                  setEditItem({ id, name, description, priority, price, link });
+                  setEditItem({
+                    id,
+                    name,
+                    description,
+                    priority,
+                    price,
+                    currency,
+                    link,
+                  });
                 }}
               />
             )}

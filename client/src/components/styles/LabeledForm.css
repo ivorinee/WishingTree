@@ -20,24 +20,49 @@
   font-weight: 500;
 }
 
+.input-form-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .input-form {
   height: 2.5rem;
   border: 2px solid #151515;
   border-radius: 30px;
-  padding: 0rem 1.5rem;
-  appearance: none;
+  padding: 0.5rem 1.2rem;
   width: 100%;
   box-sizing: border-box;
 }
 
+.input-form:open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-form option {
+  border: 3px solid #151515;
+}
+
+/* 
 .input-form option {
   background: white;
   border: 2px solid #151515;
   border-radius: 30px;
   color: #151515;
   padding: 1rem;
-}
+} */
 
 .input-description {
   height: 7.5rem;
+  padding: 0.8rem 1.2rem;
+}
+
+@media screen and (max-width: 600px) {
+  .input-form {
+    padding: 0.5rem 1rem;
+  }
+
+  .input-description {
+    padding: 0.8rem 1.5rem;
+  }
 }

@@ -16,6 +16,7 @@ function AddEditItem({
     description = "",
     priority = "",
     price = "",
+    currency = "",
     link = "",
   } = editingItem;
 
@@ -24,6 +25,7 @@ function AddEditItem({
     description,
     priority,
     price,
+    currency,
     link,
   });
   const [error, setError] = useState("");
@@ -33,7 +35,7 @@ function AddEditItem({
   }
 
   function validateInputs() {
-    const { name, description, priority, price, link } = formValues;
+    const { name, description, priority, price, currency, link } = formValues;
 
     if (!name) {
       return "Please enter the name of the item you want on your wishlist.";
@@ -52,6 +54,9 @@ function AddEditItem({
     }
     if (price && (isNaN(price) || parseFloat(price) < 0)) {
       return "Price must be a valid number greater than or equal to 0.";
+    }
+    if (!currency) {
+      return "Select a currency for the estimated price.";
     }
     if (link && !/^https?:\/\/[^\s]+$/.test(link)) {
       return "Please provide a valid product link.";
@@ -76,6 +81,7 @@ function AddEditItem({
         formValues.description,
         formValues.link,
         formValues.price,
+        formValues.currency,
         formValues.priority
       );
     } else {
@@ -85,6 +91,7 @@ function AddEditItem({
         formValues.description,
         formValues.link,
         formValues.price,
+        formValues.currency,
         formValues.priority
       );
     }
@@ -96,8 +103,9 @@ function AddEditItem({
   const fields = [
     { label: "Name", name: "name", type: "text" },
     { label: "Description", name: "description", type: "text" },
-    { label: "Priority", name: "priority", type: "select" },
+    { label: "Priority", name: "priority", type: "select-priority" },
     { label: "Price", name: "price", type: "text" },
+    { label: "Currency", name: "currency", type: "select-currency" },
     { label: "Link", name: "link", type: "text" },
   ];
 
@@ -120,13 +128,20 @@ function AddEditItem({
                   values={formValues}
                   onChange={handleChange}
                 />
+                <div className="price-row">
+                  <LabeledForm
+                    fields={fields.slice(3, 4)}
+                    values={formValues}
+                    onChange={handleChange}
+                  />
+                  <LabeledForm
+                    fields={fields.slice(4, 5)}
+                    values={formValues}
+                    onChange={handleChange}
+                  />
+                </div>
                 <LabeledForm
-                  fields={fields.slice(3, 4)}
-                  values={formValues}
-                  onChange={handleChange}
-                />
-                <LabeledForm
-                  fields={fields.slice(4, 5)}
+                  fields={fields.slice(5, 6)}
                   values={formValues}
                   onChange={handleChange}
                 />

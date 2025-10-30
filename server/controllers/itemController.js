@@ -10,10 +10,10 @@ import {
 
 export async function addItem(req, res) {
   const { id } = req.params;
-  const { name, desc, link, price, priority } = req.body;
+  const { name, desc, link, price, currency, priority } = req.body;
   const parsedPrice = parseFloat(price);
   try {
-    await insertItem(name, id, desc, link, parsedPrice, priority);
+    await insertItem(name, id, desc, link, parsedPrice, currency, priority);
     return res.status(200).json({ message: "Item added successfully" });
   } catch (err) {
     console.error("Item error:", err);
@@ -22,9 +22,9 @@ export async function addItem(req, res) {
 }
 
 export async function editItem(req, res) {
-  const { name, itemId, desc, link, price, priority } = req.body;
+  const { name, itemId, desc, link, price, currency, priority } = req.body;
   try {
-    await modifyItem(itemId, name, desc, link, price, priority);
+    await modifyItem(itemId, name, desc, link, price, currency, priority);
     return res.status(200).json({ message: "Item edited successfully" });
   } catch (err) {
     console.error("Item error:", err);

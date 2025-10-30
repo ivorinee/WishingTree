@@ -162,9 +162,7 @@ function WishlistPage() {
   // }, [wishlist, currentUser]);
 
   if (loading) {
-    return (
-      <LoadingScreen />
-    );
+    return <LoadingScreen />;
   }
 
   return (
@@ -309,7 +307,10 @@ function WishlistPage() {
                         description={item.description}
                         priority={item.priority}
                         price={item.price}
-                        lastModified={item.last_modified.split("T")[0]}
+                        currency={item.currency}
+                        lastModified={new Intl.DateTimeFormat("en-US").format(
+                          new Date(item.last_modified)
+                        )}
                         link={item.link}
                         received={item.received}
                         reserved={item.reserved_by}

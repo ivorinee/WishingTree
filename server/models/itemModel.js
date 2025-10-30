@@ -7,23 +7,24 @@ export async function insertItem(
   desc,
   link,
   price,
+  currency,
   priority
 ) {
   const itemId = await generateUnique6DigitCode();
   const result = await pool.query(
-    `INSERT INTO wishlist_items (id, wishlist_id, name, description, price, priority, link) 
-    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [itemId, wishlistId, name, desc, price, priority, link]
+    `INSERT INTO wishlist_items (id, wishlist_id, name, description, price, currency, priority, link) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+    [itemId, wishlistId, name, desc, price, currency, priority, link]
   );
   return result.rows[0];
 }
 
-export async function modifyItem(itemId, name, desc, link, price, priority) {
+export async function modifyItem(itemId, name, desc, link, price, currency, priority) {
   const result = await pool.query(
     `UPDATE wishlist_items 
-    SET name = $1, description = $2, price = $3, priority = $4, link = $5, last_modified = NOW() 
-    WHERE id = $6`,
-    [name, desc, price, priority, link, itemId]
+    SET name = $1, description = $2, price = $3, currency = $4, priority = $5, link = $6, last_modified = NOW() 
+    WHERE id = $7`,
+    [name, desc, price, currency, priority, link, itemId]
   );
   return result.rows[0];
 }

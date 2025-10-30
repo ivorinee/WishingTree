@@ -16,7 +16,7 @@ export async function fetchWishlistItems(id) {
   }
 }
 
-export async function addItemToWishlist(id, name, desc, link, price, priority) {
+export async function addItemToWishlist(id, name, desc, link, price, currency, priority) {
   try {
     await axios.post(
       `${API_BASE_URL}/item/${id}/add`,
@@ -25,6 +25,7 @@ export async function addItemToWishlist(id, name, desc, link, price, priority) {
         desc,
         link,
         price: parseFloat(price),
+        currency,
         priority,
       },
       { withCredentials: true }
@@ -40,6 +41,7 @@ export async function editItemInWishlist(
   desc,
   link,
   price,
+  currency,
   priority
 ) {
   try {
@@ -51,6 +53,7 @@ export async function editItemInWishlist(
         desc,
         link,
         price: parseFloat(price),
+        currency,
         priority,
       },
       { credential: true }

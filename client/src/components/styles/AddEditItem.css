@@ -61,6 +61,13 @@
   flex-wrap: wrap;
 }
 
+.price-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
 .error-placeholder-container {
   width: 100%;
 }
@@ -80,7 +87,7 @@
 @media screen and (max-width: 1200px) {
   .add-edit-item-container {
     padding: 1rem 1.5rem;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
   }
 
   .add-edit-item-form {
