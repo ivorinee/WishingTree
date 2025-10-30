@@ -70,7 +70,6 @@ function WishlistItem({
 
   useEffect(() => {
     handleResize();
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   });
@@ -131,7 +130,10 @@ function WishlistItem({
           <div className="wishlist-item-actions">
             <div className="wishlist-item-details">
               <p className="wishlist-item-modified">
-                Last Modified: {lastModified}
+                Last Modified:{" "}
+                {new Intl.DateTimeFormat("en-US").format(
+                  new Date(lastModified)
+                )}
               </p>
               {!smallScreen && (
                 <div className="wishlist-item-price">

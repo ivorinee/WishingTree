@@ -308,9 +308,7 @@ function WishlistPage() {
                         priority={item.priority}
                         price={item.price}
                         currency={item.currency}
-                        lastModified={new Intl.DateTimeFormat("en-US").format(
-                          new Date(item.last_modified)
-                        )}
+                        lastModified={item.last_modified}
                         link={item.link}
                         received={item.received}
                         reserved={item.reserved_by}
