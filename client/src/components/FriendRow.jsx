@@ -58,7 +58,7 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
                 onClick={() => reject(id)}
               />
             </>
-          )}{" "}
+          )}
           {type === "friend" && (
             <>
               <Button
@@ -73,7 +73,15 @@ function FriendRow({ friend, type, accept, reject, refreshList }) {
                 onClick={() => setConfirmationModal(true)}
               />
             </>
-          )}{" "}
+          )}
+          {type === "myself" && (
+            <Button
+              style="disabled"
+              name="It's Me"
+              disabled={true}
+              onClick={() => navigate(`../user/${id}`)}
+            />
+          )}
           {type === "" && (
             <Button
               style="view-friend-button"

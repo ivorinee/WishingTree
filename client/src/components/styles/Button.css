@@ -283,7 +283,7 @@ disabled:hover {
   }
 
   .view-friend-button {
-    padding: 0 5vw;
+    padding: 0.5rem 2rem; 
   }
 
   .accept-friend-button,

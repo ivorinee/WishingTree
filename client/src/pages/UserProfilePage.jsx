@@ -16,7 +16,6 @@ import {
   fetchUserWishlists,
   fetchPercentageComplete,
 } from "../api/wishlistApi";
-import sortIcon from "../assets/sort-icon.svg";
 import rightIcon from "../assets/right-icon.svg";
 import leftIcon from "../assets/left-icon.svg";
 import "./styles/UserProfilePage.css";
@@ -32,13 +31,18 @@ function UserProfilePage() {
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   const [userWishlists, setUserWishlists] = useState([]);
-  const itemsPerPage = 2;
+  const [itemsPerPage, setItemsPerPage] = useState(2);
   const [percentage, setPercentage] = useState({});
-  const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(0);
   const [leftBtn, setLeftBtn] = useState(false);
   const [rightBtn, setRightBtn] = useState(false);
   const [displayedWishlists, setDisplayedWishlist] = useState([]);
+
+  const totalPages = Math.ceil(userWishlists.length / itemsPerPage);
+
+  function handleResize() {
+    setItemsPerPage(window.innerWidth <= 1000 ? 1 : 2);
+  }
 
   async function loadData() {
     const userData = await fetchUserDetails(id);
@@ -53,10 +57,8 @@ function UserProfilePage() {
       isFriend = true;
       requestStatus = "";
     } else if (currentUserData["friend_requests"].includes(userData.id)) {
-      isFriend = false;
       requestStatus = "received";
     } else if (userData["friend_requests"].includes(currentUserData.id)) {
-      isFriend = false;
       requestStatus = "sent";
     }
 
@@ -67,9 +69,6 @@ function UserProfilePage() {
     setName(userData.name);
     setUserWishlists(wishlistData);
     setProfileIcon(userData.profile_icon);
-
-    const pages = Math.ceil(wishlistData.length / itemsPerPage);
-    setTotalPages(pages);
 
     const percentageData = await Promise.all(
       wishlistData.map((wishlist) =>
@@ -90,7 +89,10 @@ function UserProfilePage() {
   }
 
   useEffect(() => {
+    handleResize();
     loadData();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -101,11 +103,9 @@ function UserProfilePage() {
     setLeftBtn(page > 0);
     setRightBtn(page < totalPages - 1);
     setDisplayedWishlist(viewedWishlists);
-  }, [userWishlists, page]);
+  }, [userWishlists, page, itemsPerPage, totalPages]);
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
+  if (loading) return <LoadingScreen />;
 
   return (
     <ScreenFrame>
@@ -114,53 +114,48 @@ function UserProfilePage() {
           <div className="user-page-profile">
             <ProfileImage index={profileIcon} />
             <div className="user-page-profile-text">
-              <h1>{name}</h1>
-              <p className="user-page-id">ID: {id}</p>
+              <h1>{name}</h1> <p className="user-page-id">ID: {id}</p>
             </div>
           </div>
           <div className="user-page-actions">
             {friend && (
-              <Button
-                name="View Friends"
-                onClick={() => {
-                  navigate(`/${id}/friends`);
-                }}
-              />
+              <>
+                <Button
+                  name="View Friends"
+                  onClick={() => navigate(`/${id}/friends`)}
+                />
+                <Button
+                  name="Remove Friend"
+                  style={"white-background"}
+                  onClick={() => setConfirmationModal(true)}
+                />
+                {confirmationModal && (
+                  <ConfirmationModal
+                    type="friend"
+                    id={id}
+                    onClose={() => setConfirmationModal(false)}
+                    refresh={loadData}
+                  />
+                )}
+              </>
             )}
-            {friend && (
-              <Button
-                name="Remove Friend"
-                style={"white-background"}
-                onClick={() => setConfirmationModal(true)}
-              />
+            {!friend && friendRequest === "received" && (
+              <>
+                <Button
+                  name="Accept Friend Request"
+                  onClick={() => acceptRequest(id, loadData)}
+                />
+                <Button
+                  name="Reject Friend Request"
+                  style={"white-background"}
+                  onClick={() => rejectRequest(id, loadData)}
+                />
+              </>
             )}
-            {confirmationModal && (
-              <ConfirmationModal
-                type="friend"
-                id={id}
-                onClose={() => setConfirmationModal(false)}
-                refresh={loadData}
-              />
-            )}
-
-            {!friend && friendRequest == "received" && (
-              <Button
-                name="Accept Friend Request"
-                onClick={() => acceptRequest(id, loadData)}
-              />
-            )}
-            {!friend && friendRequest == "received" && (
-              <Button
-                name="Reject Friend Request"
-                style={"white-background"}
-                onClick={() => rejectRequest(id, loadData)}
-              />
-            )}
-
-            {!friend && friendRequest == "sent" && (
+            {!friend && friendRequest === "sent" && (
               <Button name="Friend Request Sent" style={"disabled"} />
             )}
-            {!friend && friendRequest == "" && (
+            {!friend && friendRequest === "" && (
               <Button
                 name="Add Friend"
                 onClick={() => handleSendRequest(id, loadData)}
@@ -168,14 +163,13 @@ function UserProfilePage() {
             )}
           </div>
         </div>
-        <div />
         <div className="user-page-wishlists">
           <div className="user-page-wishlists-title">
             <h1>{name}'s Wishlists</h1>
-            {/* <Button style="sort-button" name="SORT" image={sortIcon} /> */}
           </div>
+
           <div className="wishlists-content">
-            {userWishlists.length >= 1 && (
+            {itemsPerPage === 2 && displayedWishlists.length >= 1 && (
               <Button
                 style={`next-prev-button ${!leftBtn ? "opacity-disabled" : ""}`}
                 image={leftIcon}
@@ -183,12 +177,13 @@ function UserProfilePage() {
                 onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
               />
             )}
-            {userWishlists.length === 0 ? (
+
+            {displayedWishlists.length === 0 ? (
               <div className="wishlists-empty-placeholder">
                 <p>This user has no existing wishlists!</p>
               </div>
             ) : (
-              <div className="wishlists-cards">
+              <div className={`wishlists-cards per-page-${itemsPerPage}`}>
                 {displayedWishlists.map((wishlist, index) => (
                   <WishlistCard
                     key={wishlist.id}
@@ -196,6 +191,7 @@ function UserProfilePage() {
                     title={wishlist.name}
                     progress={percentage[wishlist.id]}
                     link={wishlist.share_link}
+                    privacy={wishlist.privacy_status}
                     color={index % 2 === 0 ? "green" : "blue"}
                     side={index % 2 === 0 ? "left" : "right"}
                   />
@@ -203,7 +199,7 @@ function UserProfilePage() {
               </div>
             )}
 
-            {displayedWishlists.length >= 1 && (
+            {itemsPerPage === 2 && displayedWishlists.length >= 1 && (
               <Button
                 style={`next-prev-button ${
                   !rightBtn ? "opacity-disabled" : ""
@@ -216,6 +212,27 @@ function UserProfilePage() {
               />
             )}
           </div>
+
+          {itemsPerPage === 1 && displayedWishlists.length >= 1 && (
+            <div className="home-page-wishlist-buttons">
+              <Button
+                style={`next-prev-button ${!leftBtn ? "opacity-disabled" : ""}`}
+                image={leftIcon}
+                disabled={!leftBtn}
+                onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
+              />
+              <Button
+                style={`next-prev-button ${
+                  !rightBtn ? "opacity-disabled" : ""
+                }`}
+                image={rightIcon}
+                disabled={!rightBtn}
+                onClick={() =>
+                  setPage((prev) => Math.min(prev + 1, totalPages - 1))
+                }
+              />
+            </div>
+          )}
         </div>
       </div>
     </ScreenFrame>

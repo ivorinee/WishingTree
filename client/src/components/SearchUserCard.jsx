@@ -24,7 +24,7 @@ function SearchUserCard({
   let buttonDisabled = false;
   let buttonClass = "";
   if (isOwner) {
-    buttonText = "It's You";
+    buttonText = "It's Me";
     buttonDisabled = true;
     buttonClass = "disabled";
   } else if (isFriend) {

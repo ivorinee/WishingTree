@@ -15,6 +15,7 @@ function FriendListPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [curUser, setCurUser] = useState(null);
   const [name, setName] = useState("");
   const [friends, setFriends] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
@@ -41,7 +42,8 @@ function FriendListPage() {
         setName(userData.name);
       }
     }
-
+    setCurUser(await fetchCurrentUser());
+    
     const friendDetails = await Promise.all(
       userData.friends.map((id) => fetchUserDetails(id))
     );
@@ -71,7 +73,10 @@ function FriendListPage() {
                     id: friend.id,
                     profileIcon: friend.profile_icon,
                   }}
-                  type={id ? "" : "friend"}
+                  // type={id ? "" : "friend"}
+                  type={
+                    curUser.id === friend.id ? "myself" : id ? "" : "friend"
+                  }
                   refreshList={loadData}
                 />
                 {index < friends.length - 1 && (
@@ -82,7 +87,7 @@ function FriendListPage() {
             {friends.length === 0 && <p>You have no friends at the moment!</p>}
           </div>
         </div>
-        {friendRequests.length > 0 && (
+        {friendRequests.length > 0 && userData.id != id && (
           <div className="friend-request-container">
             <h1>Friend Requests</h1>
             <div className="friend-request-list">

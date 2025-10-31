@@ -116,11 +116,13 @@
   justify-content: flex-end;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
   .home-page-profile {
     gap: 1rem;
   }
+}
 
+@media screen and (max-width: 500px) {
   .home-page-reserved-gifts-container {
     flex-direction: column;
     padding: 0.5rem 1rem;
