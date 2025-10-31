@@ -78,7 +78,7 @@ function WishlistPage() {
   }
 
   async function handlePrivacyToggle() {
-    const privacyStatus = await setPrivacyStatus(isPrivate, wishlist);
+    const privacyStatus = await setPrivacyStatus(isPrivate, wishlist.id);
     setIsPrivate(privacyStatus);
   }
 
@@ -100,6 +100,7 @@ function WishlistPage() {
       }
 
       setWishlist(wishlistData);
+      console.log("Wishlist Data:", wishlistData);
       setWishlistItems(wishlistItems);
       setCurrentUser(currentUser);
 
@@ -116,7 +117,7 @@ function WishlistPage() {
         setOwnership(ownershipColour.nonOwnership);
       }
 
-      setIsPrivate(wishlist.privacy_status);
+      setIsPrivate(wishlistData.privacy_status);
       setSavedWishlist(
         currentUser && wishlistData.saved_by.includes(currentUser.id)
       );

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Button from "./Button";
-import { unsaveWishlist } from "../api/wishlistApi";
+import { setPrivacyStatus, unsaveWishlist } from "../api/wishlistApi";
 import paperclip from "../assets/paperclip.svg";
 import binder from "../assets/binder.svg";
 import linkIcon from "../assets/link-icon.svg";
@@ -45,7 +45,11 @@ function WishlistCard({
   const navigate = useNavigate();
   const [isPrivate, setIsPrivate] = useState(privacy);
   const scheme = COLOR_SCHEMES[color];
-  console.log(!owner && !saved);
+
+  async function handlePrivacyToggle() {
+    const privacyStatus = await setPrivacyStatus(isPrivate, id);
+    setIsPrivate(privacyStatus);
+  }
 
   async function removeSavedWishlist() {
     await unsaveWishlist(id);
@@ -92,7 +96,11 @@ function WishlistCard({
               </div>
             ) : (
               <div className="progress-bar">
-                <p>{saved ? "Oops! Someone forgot to wish." : "You have yet to wish for anything."}</p>
+                <p>
+                  {!owner
+                    ? "Oops! Someone forgot to wish."
+                    : "You have yet to wish for anything."}
+                </p>
               </div>
             )}
           </div>
@@ -100,7 +108,7 @@ function WishlistCard({
             {owner && !saved && (
               <button
                 className={`privacy-toggle ${isPrivate ? "private" : ""}`}
-                onClick={() => setIsPrivate(!isPrivate)}
+                onClick={handlePrivacyToggle}
               >
                 <div
                   className="privacy-thumb"

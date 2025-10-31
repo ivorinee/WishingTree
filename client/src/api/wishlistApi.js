@@ -73,13 +73,13 @@ export async function deleteWishlist(id) {
   }
 }
 
-export async function setPrivacyStatus(isPrivate, wishlist) {
+export async function setPrivacyStatus(isPrivate, id) {
   try {
     const newStatus = !isPrivate;
     await axios.post(
       `${API_BASE_URL}/wishlists/privacy/set`,
       {
-        id: wishlist.id,
+        id: id,
         privacyStatus: newStatus,
       },
       {

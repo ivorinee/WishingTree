@@ -65,4 +65,9 @@
   .input-description {
     padding: 0.8rem 1.5rem;
   }
+
+  .input-form:open {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
 }
