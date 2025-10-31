@@ -159,7 +159,6 @@ export async function fetchPercentageComplete(wishlistId) {
 
 export async function renameWishlist(id, name) {
   try {
-    console.log(name);
     await axios.post(
       `${API_BASE_URL}/wishlists/rename/${id}`,
       { name },

@@ -100,7 +100,6 @@ function WishlistPage() {
       }
 
       setWishlist(wishlistData);
-      console.log("Wishlist Data:", wishlistData);
       setWishlistItems(wishlistItems);
       setCurrentUser(currentUser);
 
