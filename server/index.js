@@ -26,7 +26,7 @@ app.use(
   })
 );
 
-app.set("trust proxy", 1);
+app.set("trust proxy", 1); // Command out for development
 
 app.use(
   session({
@@ -34,9 +34,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true, // Set to true if using HTTPS
+      secure: true, // Set to false for development
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "None", // Set to lax for development
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
@@ -45,10 +45,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/', (req, res) => {
+  res.send('Wishing Tree server is awake!');
+});
+
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/wishlists", wishlistRoutes);
 app.use("/item", itemRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
