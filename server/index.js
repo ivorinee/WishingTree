@@ -45,15 +45,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-  res.send('Wishing Tree server is awake!');
+app.get("/ping", (req, res) => {
+  res.send("Wishing Tree server is awake!");
 });
 
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/wishlists", wishlistRoutes);
 app.use("/item", itemRoutes);
-
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
